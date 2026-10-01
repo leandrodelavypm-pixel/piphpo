@@ -1,0 +1,6 @@
+{
+  "redirects": [{ "source": "/", "destination": "/site/", "permanent": false }],
+  "headers": [
+    { "source": "/video/out/(.*)\\.mp4", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }] }
+  ]
+}
