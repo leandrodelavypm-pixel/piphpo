@@ -26,6 +26,9 @@
   --ok:#6CC58F; --ok-soft:#1C3526; --warn:#E3B04B; --warn-soft:#3A2F14; --bad:#EE8A76; --bad-soft:#3D221C; color-scheme:dark}
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+img{max-width:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
 .wrap{max-width:1100px;margin:0 auto;padding-inline:16px;padding-block:0 48px}
 h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:.01em;text-wrap:balance;margin:0}
@@ -98,7 +101,7 @@ legend{font-family:var(--display);font-size:1.25rem;font-weight:600;padding:0;ma
 .check input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:0 0 auto}
 
 /* fotos */
-.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
 .ph{border:1.5px dashed var(--line);border-radius:8px;aspect-ratio:3/4;max-width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden;background:var(--bg);cursor:pointer;text-align:center;padding:12px}
 .ph.has{border-style:solid;border-color:var(--ok)}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -171,7 +174,7 @@ legend{font-family:var(--display);font-size:1.25rem;font-weight:600;padding:0;ma
 .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:.94rem}
 .kv dt{color:var(--muted)}
 .kv dd{margin:0;font-weight:500;min-width:0;overflow-wrap:anywhere}
-.thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .thumb{aspect-ratio:3/4;border-radius:6px;background:var(--surface-2);display:grid;place-items:center;font-size:.78rem;color:var(--muted);overflow:hidden;text-align:center;padding:4px}
 .thumb img{width:100%;height:100%;object-fit:cover}
 .mini{width:100%;border-collapse:collapse;font-size:.9rem}
@@ -256,14 +259,17 @@ legend{font-family:var(--display);font-size:1.25rem;font-weight:600;padding:0;ma
         </section>
 
         <section data-step="2" hidden>
-          <div><h2>Fotos posturais</h2><p class="lead">Três fotos de corpo inteiro. Elas servem para a avaliação postural e para comparar sua evolução ao longo do programa.</p></div>
+          <div><h2>Fotos posturais</h2><p class="lead">Quatro fotos de corpo inteiro. Elas servem para a avaliação postural e para comparar sua evolução ao longo do programa.</p></div>
           <div class="photos">
             <label class="ph" id="ph-frente"><input type="file" accept="image/*" data-pos="frente" aria-label="Foto de frente">
               <svg class="sil" viewBox="0 0 46 78" aria-hidden="true"><circle cx="23" cy="8" r="7" fill="currentColor"/><rect x="12" y="17" width="22" height="30" rx="6" fill="currentColor"/><rect x="13" y="46" width="8" height="30" rx="3" fill="currentColor"/><rect x="25" y="46" width="8" height="30" rx="3" fill="currentColor"/><rect x="3" y="19" width="7" height="26" rx="3" fill="currentColor"/><rect x="36" y="19" width="7" height="26" rx="3" fill="currentColor"/></svg>
               <b>Frente</b><span class="hint">Toque para enviar</span></label>
-            <label class="ph" id="ph-perfil"><input type="file" accept="image/*" data-pos="perfil" aria-label="Foto de perfil">
+            <label class="ph" id="ph-perfil_d"><input type="file" accept="image/*" data-pos="perfil_d" aria-label="Foto de perfil direito">
               <svg class="sil" viewBox="0 0 46 78" aria-hidden="true"><circle cx="24" cy="8" r="7" fill="currentColor"/><rect x="16" y="17" width="15" height="30" rx="6" fill="currentColor"/><rect x="18" y="46" width="9" height="30" rx="3" fill="currentColor"/><rect x="20" y="19" width="7" height="26" rx="3" fill="currentColor" opacity=".6"/></svg>
               <b>Perfil direito</b><span class="hint">Toque para enviar</span></label>
+            <label class="ph" id="ph-perfil_e"><input type="file" accept="image/*" data-pos="perfil_e" aria-label="Foto de perfil esquerdo">
+              <svg class="sil" viewBox="0 0 46 78" aria-hidden="true"><circle cx="22" cy="8" r="7" fill="currentColor"/><rect x="15" y="17" width="15" height="30" rx="6" fill="currentColor"/><rect x="19" y="46" width="9" height="30" rx="3" fill="currentColor"/><rect x="19" y="19" width="7" height="26" rx="3" fill="currentColor" opacity=".6"/></svg>
+              <b>Perfil esquerdo</b><span class="hint">Toque para enviar</span></label>
             <label class="ph" id="ph-costas"><input type="file" accept="image/*" data-pos="costas" aria-label="Foto de costas">
               <svg class="sil" viewBox="0 0 46 78" aria-hidden="true"><circle cx="23" cy="8" r="7" fill="currentColor"/><rect x="12" y="17" width="22" height="30" rx="6" fill="currentColor"/><rect x="13" y="46" width="8" height="30" rx="3" fill="currentColor"/><rect x="25" y="46" width="8" height="30" rx="3" fill="currentColor"/><rect x="3" y="19" width="7" height="26" rx="3" fill="currentColor"/><rect x="36" y="19" width="7" height="26" rx="3" fill="currentColor"/></svg>
               <b>Costas</b><span class="hint">Toque para enviar</span></label>
@@ -446,7 +452,7 @@ function val(id){const e=document.getElementById(id);return e?e.value.trim():''}
 function status(){
   const dados=['nome','numero','grad','nasc','sexo','tel'].every(val);
   const agenda=!!selTime&&$('#prepok').checked;
-  const fotos=['frente','perfil','costas'].every(k=>photos[k]);
+  const fotos=['frente','perfil_d','perfil_e','costas'].every(k=>photos[k]);
   const parqOk=PARQ.every((_,i)=>f.querySelector(`[name=parq${i}]:checked`));
   const biaOk=BIA.every(([k])=>f.querySelector(`[name=bia_${k}]:checked`));
   const anamnese=parqOk&&biaOk&&!!val('obj');
@@ -535,7 +541,7 @@ $('#addrow').onclick=()=>{addRow();renderRail()};
 // revisão
 function renderReview(){
   const st=status();
-  const items=[['dados','Seus dados',0,true],['agenda','Horário: '+(selTime?fmt(selDay)+' às '+selTime:'não escolhido'),1,true],['fotos','Fotos posturais ('+Object.keys(photos).length+' de 3)',2],['anamnese','Anamnese',3],['r24','Recordatório 24h ('+r24rows().length+' itens)',4]];
+  const items=[['dados','Seus dados',0,true],['agenda','Horário: '+(selTime?fmt(selDay)+' às '+selTime:'não escolhido'),1,true],['fotos','Fotos posturais ('+Object.keys(photos).length+' de 4)',2],['anamnese','Anamnese',3],['r24','Recordatório 24h ('+r24rows().length+' itens)',4]];
   $('#review').innerHTML=items.map(([k,l,i,req])=>`<div><span>${esc(l)}</span><span style="display:flex;gap:10px;align-items:center">${st[k]?'<span class="st ok">Pronto</span>':`<span class="st ${req?'bad':'pend'}">${req?'Obrigatório':'Pendente'}</span>`}<button type="button" class="btn ghost" data-go="${i}">Editar</button></span></div>`).join('');
   $$('#review [data-go]').forEach(b=>b.onclick=()=>go(+b.dataset.go));
 }
@@ -594,10 +600,11 @@ function renderDetail(){
   if(!b){el.innerHTML='<p class="muted">Nenhuma avaliação marcada neste dia. Os horários aparecem aqui quando alguém agenda pelo portal.</p>';return}
   const a=alertsOf(b);
   const pend=Object.entries({fotos:'fotos posturais',anamnese:'anamnese',r24:'recordatório 24h'}).filter(([k])=>!b.done[k]).map(([,l])=>l);
-  const th=['frente','perfil','costas'].map(p=>{
-    if(b.photos&&b.photos[p])return `<div class="thumb"><img src="${b.photos[p]}" alt="Foto ${p}"></div>`;
-    if(b.fotosEx)return `<div class="thumb">${p}<br>(exemplo)</div>`;
-    return `<div class="thumb">${p}<br>não enviada</div>`}).join('');
+  const PL={frente:'frente',perfil_d:'perfil dir.',perfil_e:'perfil esq.',costas:'costas'};
+  const th=['frente','perfil_d','perfil_e','costas'].map(p=>{
+    if(b.photos&&b.photos[p])return `<div class="thumb"><img src="${b.photos[p]}" alt="Foto ${PL[p]}"></div>`;
+    if(b.fotosEx)return `<div class="thumb">${PL[p]}<br>(exemplo)</div>`;
+    return `<div class="thumb">${PL[p]}<br>não enviada</div>`}).join('');
   const kv=(k,v)=>v?`<dt>${k}</dt><dd>${esc(v)}</dd>`:'';
   el.innerHTML=`
    <div><p class="mono muted">${b.time} · ${fmt(b.date)}${b.code?' · '+b.code:''}</p><h3 style="font-size:1.6rem">${esc(b.grad)} ${esc(b.nome)}</h3><p class="muted small">Nº ${esc(b.numero)} · ${esc(b.idade||'—')} anos · ${esc(b.sexo||'—')}</p></div>

@@ -19,7 +19,7 @@ O protótipo de referência é `prototipo/index.html`.
    - bexiga vazia;
    - sem metais;
    - evitar pós-plantão noturno.
-3. **Fotos posturais**: frente, perfil direito e costas, com instruções de como tirar. Podem ser feitas na hora.
+3. **Fotos posturais** (4): frente, perfil direito, perfil esquerdo e costas, com instruções de como tirar. Podem ser feitas na hora.
 4. **Anamnese**:
    - PAR-Q (7 perguntas);
    - triagem da bioimpedância (marcapasso, implante metálico, gestação);
