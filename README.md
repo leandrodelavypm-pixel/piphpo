@@ -10,6 +10,7 @@ Este repositório reúne o material de apoio à proposta:
 | `docs/proposta/` | Proposta executiva (`v1` com 15º BPM, `v2` com Guarnição de Patos de Minas, a atual) |
 | `docs/` | Análise crítica da proposta e requisitos do sistema de agendamento |
 | `prototipo/` | Protótipo clicável do portal de pré-avaliação (HTML único, sem backend) |
+| `video/out/` | Vídeo final: `..._audio.mp4` (com trilha, usado no site) e `...mp4` (sem áudio) |
 | `video/` | Pitch animado de ~80 s: fontes HTML, scripts de render e trilha, vídeo final em `video/out/` |
 
 ## Apresentação (site)
