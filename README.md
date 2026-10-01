@@ -6,10 +6,19 @@ Este repositório reúne o material de apoio à proposta:
 
 | Pasta | Conteúdo |
 |---|---|
+| `site/` | **Apresentação em site** (pitch navegável por teclado, usada no lugar de slides) |
 | `docs/proposta/` | Proposta executiva (`v1` com 15º BPM, `v2` com Guarnição de Patos de Minas, a atual) |
 | `docs/` | Análise crítica da proposta e requisitos do sistema de agendamento |
 | `prototipo/` | Protótipo clicável do portal de pré-avaliação (HTML único, sem backend) |
 | `video/` | Pitch animado de ~80 s: fontes HTML, scripts de render e trilha, vídeo final em `video/out/` |
+
+## Apresentação (site)
+
+Abra `site/index.html` ou publique no GitHub Pages (Settings → Pages → branch `main`, pasta `/ (root)`); a raiz redireciona para `site/`.
+
+- 15 seções em tela cheia, navegação com **← →**, **espaço**, **Home/End**; **F** tela cheia; **?** atalhos.
+- Ciclo de gestão interativo, contadores, cronograma animado, protótipo rodando ao vivo num celular e o vídeo do pitch.
+- Precisa de internet para as fontes (Google Fonts); o restante é local.
 
 ## Protótipo
 

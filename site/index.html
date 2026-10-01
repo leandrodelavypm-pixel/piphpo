@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PIPHPO · Proposta ao Comando</title>
+<meta name="description" content="Programa Institucional de Performance Humana e Prontidão Operacional — projeto-piloto de inovação em gestão pública na Guarnição de Patos de Minas (10ª RPM / PMMG).">
+<link rel="icon" href="assets/brasao.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* ===== Identidade PMMG: preto, cáqui, cinza; vermelho do triângulo só como destaque ===== */
+:root{
+  --bg:#111213;--bg2:#161719;--panel:#1B1C1E;--panel2:#222326;--line:#2C2E31;
+  --ink:#F1EEE7;--muted:#9A9D9F;--kaki:#B7A076;--kaki-d:#8F7B55;--gray:#6E7275;--red:#C21F2B;
+  --ok:#7FCB98;--display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;--body:"Barlow","Segoe UI",Roboto,Arial,sans-serif;
+  --max:1240px;--top:64px;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth;color-scheme:dark}
+@media (min-width:900px){html{scroll-snap-type:y proximity}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;line-height:1.02;letter-spacing:.005em;margin:0;text-wrap:balance}
+p{margin:0}
+::selection{background:var(--kaki);color:#111}
+
+/* ---- barra superior / progresso / navegação lateral ---- */
+#progress{position:fixed;left:0;top:0;height:4px;width:0;background:var(--red);z-index:60;transition:width .15s linear}
+#topbar{position:fixed;top:0;left:0;right:0;height:var(--top);z-index:50;display:flex;align-items:center;gap:18px;padding:0 24px;background:rgba(17,18,19,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+#topbar .brand{display:flex;align-items:center;gap:12px;font:700 22px var(--display);letter-spacing:.08em;text-decoration:none}
+#topbar .brand img{height:36px}
+#topbar .sec{flex:1;min-width:0;font-size:.85rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#topbar .sec b{color:var(--kaki);font-family:var(--display);font-size:1.05rem;letter-spacing:.1em;margin-right:12px;font-variant-numeric:tabular-nums}
+#topbar .acts{display:flex;gap:8px}
+.ib{border:1px solid var(--line);background:transparent;color:var(--ink);font:600 .8rem var(--body);letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-radius:4px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.ib:hover{border-color:var(--kaki);color:var(--kaki)}
+#dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:10px}
+#dots button{width:22px;height:22px;border:0;background:transparent;padding:0;cursor:pointer;position:relative;display:grid;place-items:center}
+#dots button::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gray);transition:all .25s}
+#dots button[aria-current="true"]::before{width:11px;height:11px;background:var(--kaki)}
+#dots button span{position:absolute;right:30px;top:50%;transform:translateY(-50%);white-space:nowrap;font:600 .72rem var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--panel);border:1px solid var(--line);padding:4px 10px;border-radius:4px;opacity:0;pointer-events:none;transition:opacity .2s}
+#dots button:hover span,#dots button:focus-visible span{opacity:1}
+@media (max-width:900px){#dots{display:none}#topbar .sec span{display:none}}
+
+/* ---- seções ---- */
+.s{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;scroll-snap-align:start;padding:calc(var(--top) + 40px) 24px 64px;overflow:hidden;isolation:isolate}
+.s.alt{background:var(--bg2)}
+.s.kaki{background:var(--kaki);color:#111213}
+.s.kaki .eb{color:#111213}.s.kaki .eb::before{background:#111213}
+.in{width:100%;max-width:var(--max);margin:0 auto;position:relative;z-index:2}
+.eb{display:flex;align-items:center;gap:14px;font:600 .9rem var(--display);letter-spacing:.24em;text-transform:uppercase;color:var(--kaki);margin-bottom:22px}
+.eb::before{content:"";width:40px;height:3px;background:var(--red);flex:0 0 auto}
+.h2{font-size:clamp(2.6rem,6vw,5.2rem)}
+.h2 .k{color:var(--kaki)}
+.lead{font-size:clamp(1.1rem,1.6vw,1.45rem);color:var(--muted);max-width:62ch;margin-top:22px}
+.lead.light{color:var(--ink)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.stripes{position:absolute;right:-180px;bottom:-60px;width:900px;height:300px;transform:skewX(-28deg);pointer-events:none;z-index:1;opacity:.95}
+.stripes i{position:absolute;right:0;display:block}
+.stripes .a{bottom:0;width:100%;height:120px;background:var(--kaki)}
+.stripes .b{bottom:134px;width:80%;height:26px;background:var(--gray)}
+.stripes .c{bottom:172px;width:60%;height:10px;background:var(--gray);opacity:.55}
+.s.kaki .stripes .a{background:#111213}.s.kaki .stripes .b,.s.kaki .stripes .c{background:#3a3b3d}
+.grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(154,157,159,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(154,157,159,.05) 1px,transparent 1px);background-size:96px 96px;pointer-events:none}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i,0)*90ms)}
+.rv.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+/* ---- hero ---- */
+#inicio{padding-top:calc(var(--top) + 24px)}
+#inicio .in{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:64px;align-items:center}
+#inicio .crest{width:min(100%,420px);filter:drop-shadow(0 24px 50px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+#inicio .h1{font-size:clamp(5rem,15vw,13rem);font-weight:800;letter-spacing:.04em;line-height:.9}
+#inicio .full{font-size:clamp(1.3rem,2.4vw,2rem);font-weight:500;margin-top:18px;max-width:34ch;line-height:1.25}
+#inicio .tag{display:inline-flex;align-items:center;gap:12px;background:var(--red);color:#fff;font:600 1rem var(--display);letter-spacing:.14em;text-transform:uppercase;padding:10px 18px;margin-top:28px}
+#inicio .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 1rem var(--body);padding:14px 22px;border-radius:4px;border:1px solid var(--line);color:var(--ink);text-decoration:none;cursor:pointer;background:transparent;transition:all .2s}
+.btn:hover{border-color:var(--kaki);color:var(--kaki)}
+.btn.primary{background:var(--kaki);border-color:var(--kaki);color:#111213}
+.btn.primary:hover{background:#c9b48a;color:#111}
+#inicio .hint{margin-top:34px;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+#inicio .hint kbd{font:600 .75rem var(--body);border:1px solid var(--line);border-radius:3px;padding:2px 7px;margin:0 2px;color:var(--ink)}
+.scrollcue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:26px;height:42px;border:2px solid var(--gray);border-radius:14px;z-index:2}
+.scrollcue::after{content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--kaki);animation:cue 1.6s infinite}
+@keyframes cue{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(14px)}}
+@media (max-width:900px){#inicio .in{grid-template-columns:1fr;gap:28px}#inicio .crest{width:180px;animation:none}.scrollcue{display:none}}
+
+/* ---- tese ---- */
+#tese .q{font-size:clamp(2.4rem,5.6vw,5rem);font-family:var(--display);font-weight:700;line-height:1.05;max-width:20ch}
+#tese .q .w{display:inline-block;font-style:normal;opacity:0;transform:translateY(.4em);transition:opacity .5s,transform .5s;transition-delay:calc(var(--i)*70ms)}
+#tese.on .q .w{opacity:1;transform:none}
+#tese .q .k{color:var(--kaki)}
+#tese .cons{margin-top:36px;padding-left:24px;border-left:4px solid var(--red);font-size:clamp(1.15rem,2vw,1.6rem);max-width:48ch;color:var(--ink)}
+
+/* ---- cenário ---- */
+.list{display:flex;flex-direction:column;gap:14px;margin-top:22px}
+.item{display:flex;align-items:center;gap:16px;font-size:1.15rem;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:6px}
+.ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:800 1rem var(--display);flex:0 0 auto}
+.ic.ok{border:2px solid var(--kaki);color:var(--kaki)}
+.ic.no{background:var(--red);color:#fff}
+.colh{font-size:1.9rem;letter-spacing:.06em;text-transform:uppercase}
+.colh.k{color:var(--kaki)}.colh.r{color:var(--red)}
+
+/* ---- statement ---- */
+#desafio .big{font-size:clamp(3rem,8vw,7.5rem);line-height:.98;font-weight:800;max-width:14ch}
+#desafio .big .r{color:var(--red)}
+#desafio .sub{margin-top:30px;font-size:clamp(1.1rem,1.8vw,1.5rem);max-width:56ch;color:#2a2a2a}
+
+/* ---- solução ---- */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:26px 26px 28px}
+.card h3{font-size:1.6rem;letter-spacing:.03em;margin-bottom:10px}
+.card p{color:var(--muted);font-size:1rem}
+.card .n{font:800 2.6rem var(--display);color:var(--kaki);line-height:1;margin-bottom:10px}
+.mission{background:var(--panel);border-left:5px solid var(--kaki);padding:26px 28px;font-size:clamp(1.1rem,1.6vw,1.35rem);line-height:1.45;border-radius:0 8px 8px 0}
+.mission b{color:var(--kaki);font-family:var(--display);font-size:1.05rem;letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:10px;font-weight:600}
+.cos{margin-top:22px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+.cos .abbr{font:800 4.2rem var(--display);color:var(--kaki);line-height:1}
+.cos p{color:var(--muted)}
+.cos p b{color:var(--ink)}
+
+/* ---- eixos ---- */
+.eixo{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:28px 24px 26px;overflow:hidden;transition:transform .25s,border-color .25s}
+.eixo:hover{transform:translateY(-4px);border-color:var(--kaki)}
+.eixo .num{font:800 4rem var(--display);color:var(--kaki);opacity:.35;line-height:1;position:absolute;right:16px;top:8px}
+.eixo h3{font-size:1.45rem;letter-spacing:.02em;max-width:85%}
+.eixo p{color:var(--muted);margin-top:10px;font-size:.98rem}
+.eixo::after{content:"";position:absolute;left:0;bottom:0;height:4px;width:0;background:var(--kaki);transition:width .4s}
+.eixo:hover::after{width:100%}
+
+/* ---- ciclo ---- */
+#ciclo .in{display:grid;grid-template-columns:minmax(0,480px) minmax(0,1fr);gap:32px;align-items:center}
+#ciclo .h2{font-size:clamp(2.4rem,4.6vw,4.2rem)}
+#cyc{width:100%;max-width:900px;margin:0 auto;display:block}
+#cyc .ring{fill:none;stroke:var(--line);stroke-width:3}
+#cyc .arc{fill:none;stroke:var(--kaki);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.4s ease}
+#ciclo.on #cyc .arc{stroke-dashoffset:0}
+#cyc .node{cursor:pointer}
+#cyc .node circle{fill:var(--bg);stroke:var(--kaki);stroke-width:3;transition:all .25s}
+#cyc .node text{font:700 15px var(--display);fill:var(--ink);letter-spacing:.06em;text-transform:uppercase}
+#cyc .node .num{font:800 16px var(--display);fill:var(--kaki)}
+#cyc .node.cmd circle{stroke:var(--red)}
+#cyc .node.on circle{fill:var(--kaki);stroke:var(--kaki)}
+#cyc .node.on .num{fill:#111}
+#cyc .node.cmd.on circle{fill:var(--red);stroke:var(--red)}
+#cyc .node.cmd.on .num{fill:#fff}
+#cyc .node.on text:not(.num){fill:var(--kaki)}
+#cyc .ctr{font:700 22px var(--display);fill:var(--kaki);letter-spacing:.1em;text-transform:uppercase;text-anchor:middle}
+#cycdesc{margin-top:26px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:22px 24px;min-height:150px}
+#cycdesc .t{font:700 1.5rem var(--display);letter-spacing:.03em;display:flex;align-items:center;gap:12px}
+#cycdesc .t i{font-style:normal;font-size:1rem;color:var(--kaki);letter-spacing:.2em}
+#cycdesc p{color:var(--muted);margin-top:8px}
+#cycdesc .o{margin-top:10px;font-size:.95rem}
+#cycdesc .o b{color:var(--kaki)}
+@media (max-width:900px){#ciclo .in{grid-template-columns:1fr}}
+
+/* ---- comparativo ---- */
+.cmp{width:100%;border-collapse:collapse;margin-top:26px;font-size:1.05rem}
+.cmp th{text-align:left;font:600 .85rem var(--display);letter-spacing:.2em;text-transform:uppercase;padding:0 18px 14px;color:var(--muted)}
+.cmp th.k{color:var(--kaki)}
+.cmp td{padding:18px;border-top:1px solid var(--line);vertical-align:middle}
+.cmp td:first-child{color:var(--muted);width:46%}
+.cmp td:last-child{font-weight:600;position:relative;padding-left:44px}
+.cmp td:last-child::before{content:"→";position:absolute;left:14px;color:var(--kaki);font-weight:800}
+@media (max-width:640px){.cmp td{display:block;width:100%!important;padding:10px 0}.cmp td:first-child{border-top:1px solid var(--line);padding-top:16px}.cmp td:last-child{border-top:0;padding-left:28px;padding-bottom:16px}.cmp td:last-child::before{left:0}.cmp thead{display:none}}
+
+/* ---- na prática ---- */
+#pratica .in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:center}
+.steps{display:flex;flex-direction:column;gap:18px;margin-top:26px}
+.step{display:flex;gap:18px;align-items:flex-start;font-size:1.15rem}
+.step b{font:800 1.6rem var(--display);color:var(--red);width:30px;flex:0 0 auto;line-height:1.2}
+.step small{display:block;color:var(--muted);font-size:.95rem;margin-top:2px}
+.phone{width:380px;max-width:100%;height:780px;border-radius:50px;background:#0b0b0c;border:3px solid #35373a;padding:14px;box-shadow:0 40px 90px rgba(0,0,0,.6);position:relative;margin:0 auto}
+.phone::before{content:"";position:absolute;left:50%;top:14px;width:120px;height:26px;transform:translateX(-50%);background:#0b0b0c;border-radius:0 0 16px 16px;z-index:2}
+.phone iframe{width:100%;height:100%;border:0;border-radius:38px;background:#F3F5F2}
+.phone .lbl{position:absolute;left:50%;bottom:-38px;transform:translateX(-50%);white-space:nowrap;font:600 .78rem var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:1000px){#pratica .in{grid-template-columns:1fr}.phone{height:640px;width:340px}}
+
+/* ---- vídeo ---- */
+.vid{position:relative;max-width:1000px;margin:26px auto 0;border-radius:10px;overflow:hidden;border:1px solid var(--line);box-shadow:0 40px 90px rgba(0,0,0,.55);background:#000}
+.vid video{display:block;width:100%;aspect-ratio:16/9}
+
+/* ---- piloto ---- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:30px}
+.kpi{background:var(--kaki);color:#111213;padding:26px 24px 24px;border-top:6px solid #111213}
+.kpi.red{border-top-color:var(--red)}
+.kpi b{display:block;font:800 clamp(4rem,7vw,6.5rem) var(--display);line-height:.9;font-variant-numeric:tabular-nums}
+.kpi span{display:block;margin-top:10px;font-weight:500;font-size:1.05rem;color:#2a2a2a}
+.tl{margin-top:44px}
+.tl .months{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-bottom:8px}
+.tl .months span{font:600 .75rem var(--body);color:var(--muted);text-align:center;letter-spacing:.06em}
+.tl .row{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-bottom:8px}
+.tl .bar{height:46px;display:flex;align-items:center;padding:0 14px;font:600 .95rem var(--display);letter-spacing:.06em;text-transform:uppercase;color:#111213;background:var(--kaki);border-radius:4px;transform-origin:left;transform:scaleX(0);transition:transform .9s cubic-bezier(.2,.7,.2,1);white-space:nowrap;overflow:hidden}
+.tl .bar.g{background:var(--gray);color:#fff}
+.tl .bar.r{background:var(--red);color:#fff}
+#piloto.on .tl .bar{transform:scaleX(1)}
+.tl .cap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}
+.tl .cap div{font-size:.95rem;color:var(--muted)}
+.tl .cap b{display:block;color:var(--ink);font-family:var(--display);font-size:1.15rem;letter-spacing:.04em}
+.spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:30px}
+.spec div{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px 18px}
+.spec small{display:block;font:600 .75rem var(--display);letter-spacing:.2em;text-transform:uppercase;color:var(--kaki);margin-bottom:6px}
+
+/* ---- critérios ---- */
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.chip{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:12px 20px 12px 14px;font-size:1.05rem}
+.chip i{width:28px;height:28px;border-radius:50%;background:var(--kaki);color:#111;display:grid;place-items:center;font:800 .9rem var(--display);font-style:normal}
+.note{margin-top:30px;padding:18px 22px;border:1px dashed var(--kaki-d);border-radius:8px;color:var(--muted);max-width:80ch}
+.note b{color:var(--kaki)}
+
+/* ---- benefícios ---- */
+.ben{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:24px;border-top:4px solid var(--kaki)}
+.ben h3{font-size:1.3rem;letter-spacing:.08em;text-transform:uppercase;color:var(--kaki);margin-bottom:12px}
+.ben ul{margin:0;padding-left:18px;color:var(--ink);display:flex;flex-direction:column;gap:6px;font-size:.98rem}
+
+/* ---- encaminhamento ---- */
+#pedido .box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:40px;max-width:980px;position:relative}
+#pedido .box::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--red);border-radius:10px 0 0 10px}
+#pedido .ask{font-size:clamp(1.4rem,2.6vw,2.2rem);font-family:var(--display);font-weight:600;line-height:1.25}
+#pedido .ask b{color:var(--kaki)}
+#pedido .after{margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+#pedido .after div{border-top:1px solid var(--line);padding-top:12px;color:var(--muted);font-size:.95rem}
+#pedido .after b{display:block;color:var(--ink);font-family:var(--display);font-size:1.15rem;letter-spacing:.04em;margin-bottom:4px}
+
+/* ---- fim ---- */
+#fim{text-align:center}
+#fim .crest{width:150px;margin:0 auto 20px;filter:drop-shadow(0 16px 40px rgba(0,0,0,.6))}
+#fim .lib{font-style:italic;color:var(--kaki-d);letter-spacing:.16em;margin-bottom:28px}
+#fim .motto{font-size:clamp(2.2rem,5.4vw,4.6rem);max-width:22ch;margin:0 auto}
+#fim .motto .k{color:var(--kaki)}
+#fim .sig{margin-top:44px;display:flex;flex-direction:column;gap:6px}
+#fim .sig .a{font:700 1.25rem var(--display);letter-spacing:.2em;text-transform:uppercase;color:var(--kaki)}
+#fim .sig .b{font-size:1.15rem;font-weight:600}
+#fim .sig .c{color:var(--muted);font-size:.95rem}
+#fim .decl{margin:36px auto 0;max-width:70ch;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:18px}
+
+/* ---- ajuda ---- */
+#help{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.7);display:grid;place-items:center;padding:24px}
+#help .p{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:28px 32px;max-width:460px;width:100%}
+#help h3{font-size:1.6rem;margin-bottom:14px}
+#help dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:0;font-size:.98rem;color:var(--muted)}
+#help kbd{font:600 .8rem var(--body);border:1px solid var(--line);border-radius:3px;padding:3px 8px;color:var(--ink);background:var(--bg)}
+#help .cl{margin-top:20px}
+#help[hidden]{display:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--kaki);outline-offset:3px}
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+
+<header id="topbar">
+  <a class="brand" href="#inicio"><img src="assets/brasao.png" alt="Brasão da PMMG"><span>PIPHPO</span></a>
+  <div class="sec" aria-live="polite"><b id="cnt">01 / 15</b><span id="secname">Início</span></div>
+  <div class="acts">
+    <a class="ib" href="../prototipo/index.html" target="_blank" rel="noopener">Protótipo</a>
+    <button class="ib" id="fsbtn" type="button" title="Tela cheia (F)">Tela cheia</button>
+    <button class="ib" id="helpbtn" type="button" title="Atalhos (?)">?</button>
+  </div>
+</header>
+<nav id="dots" aria-label="Seções"></nav>
+
+<main>
+
+<!-- 1 · INÍCIO -->
+<section class="s" id="inicio" data-title="Início">
+  <div class="grid"></div>
+  <div class="stripes" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+  <div class="in">
+    <img class="crest rv" src="assets/brasao.png" alt="Brasão da Polícia Militar de Minas Gerais">
+    <div>
+      <div class="eb rv" style="--i:1">Polícia Militar de Minas Gerais · 10ª RPM · Guarnição de Patos de Minas</div>
+      <h1 class="h1 rv" style="--i:2">PIPHPO</h1>
+      <p class="full rv" style="--i:3">Programa Institucional de Performance Humana e Prontidão Operacional</p>
+      <div class="tag rv" style="--i:4">Proposta executiva · Projeto-piloto de inovação em gestão pública</div>
+      <div class="ctas rv" style="--i:5">
+        <a class="btn primary" href="#tese">Iniciar apresentação ↓</a>
+        <a class="btn" href="#pratica">Ver o sistema na prática</a>
+      </div>
+      <p class="hint rv" style="--i:6">Navegue com <kbd>→</kbd> <kbd>←</kbd> ou <kbd>espaço</kbd> · <kbd>F</kbd> tela cheia · <kbd>?</kbd> atalhos</p>
+    </div>
+  </div>
+  <div class="scrollcue" aria-hidden="true"></div>
+</section>
+
+<!-- 2 · TESE -->
+<section class="s alt" id="tese" data-title="Tese institucional">
+  <div class="grid"></div>
+  <div class="in">
+    <div class="eb rv">Tese institucional</div>
+    <p class="q" id="tq">A capacidade operacional da Polícia Militar depende diretamente da <span class="k">capacidade humana</span> do seu efetivo.</p>
+    <p class="cons rv" style="--i:8">Portanto, gerir a performance humana é gerir a capacidade operacional da Instituição.</p>
+  </div>
+</section>
+
+<!-- 3 · CENÁRIO -->
+<section class="s" id="cenario" data-title="Cenário atual">
+  <div class="in">
+    <div class="eb rv">O cenário atual na Guarnição de Patos de Minas</div>
+    <h2 class="h2 rv" style="--i:1">A Polícia Militar <span class="k">já possui</span> os recursos. Falta integrá-los.</h2>
+    <div class="grid2" style="margin-top:40px">
+      <div>
+        <h3 class="colh k rv" style="--i:2">O que já existe</h3>
+        <div class="list">
+          <div class="item rv" style="--i:3"><span class="ic ok">✓</span>Academia de musculação instalada e em funcionamento</div>
+          <div class="item rv" style="--i:4"><span class="ic ok">✓</span>Equipamentos destinados ao treinamento físico</div>
+          <div class="item rv" style="--i:5"><span class="ic ok">✓</span>Espaço físico apropriado para as atividades</div>
+          <div class="item rv" style="--i:6"><span class="ic ok">✓</span>Policiais militares interessados na prática regular</div>
+          <div class="item rv" style="--i:7"><span class="ic ok">✓</span>Apoio institucional às ações de qualidade de vida</div>
+        </div>
+      </div>
+      <div>
+        <h3 class="colh r rv" style="--i:4">O que falta</h3>
+        <div class="list">
+          <div class="item rv" style="--i:5"><span class="ic no">✕</span>Modelo institucional de gestão da performance humana</div>
+          <div class="item rv" style="--i:6"><span class="ic no">✕</span>Protocolos padronizados de avaliação física e funcional</div>
+          <div class="item rv" style="--i:7"><span class="ic no">✕</span>Indicadores gerenciais para apoiar a decisão</div>
+          <div class="item rv" style="--i:8"><span class="ic no">✕</span>Planejamento sistematizado do treinamento</div>
+          <div class="item rv" style="--i:9"><span class="ic no">✕</span>Integração com os profissionais de saúde</div>
+          <div class="item rv" style="--i:10"><span class="ic no">✕</span>Acompanhamento longitudinal e relatórios ao Comando</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · DESAFIO -->
+<section class="s kaki" id="desafio" data-title="O desafio">
+  <div class="stripes" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+  <div class="in">
+    <div class="eb rv">O desafio institucional</div>
+    <h2 class="big rv" style="--i:1">O desafio não está na infraestrutura.<br><span class="r">Está na gestão</span> da capacidade operacional.</h2>
+    <p class="sub rv" style="--i:2">Academias, equipamentos e espaços de treino, usados de forma isolada, não produzem informação estratégica. O desafio é integrar pessoas, processos, informações e indicadores em torno de um objetivo comum: preservar e ampliar a capacidade operacional da Corporação.</p>
+  </div>
+</section>
+
+<!-- 5 · SOLUÇÃO -->
+<section class="s alt" id="solucao" data-title="A solução">
+  <div class="grid"></div>
+  <div class="in">
+    <div class="eb rv">A solução</div>
+    <h2 class="h2 rv" style="--i:1">Da academia ao <span class="k">centro de gestão</span> da performance humana</h2>
+    <div class="grid2" style="margin-top:36px">
+      <div>
+        <div class="mission rv" style="--i:2"><b>Missão</b>Gerenciar estrategicamente a performance humana do policial militar, promovendo saúde, desenvolvimento físico, prevenção de incapacidades, integração multiprofissional e produção de inteligência institucional, para fortalecer continuamente a capacidade operacional da PMMG.</div>
+        <div class="cos rv" style="--i:3">
+          <div class="abbr">COS</div>
+          <p><b>Capacidade Operacional Sustentável.</b> A aptidão da Polícia Militar para manter, ao longo do tempo, um efetivo física, funcional e psicologicamente preparado, por meio da gestão integrada da performance humana, da prevenção de incapacidades e do uso eficiente dos recursos existentes.</p>
+        </div>
+      </div>
+      <div class="grid3" style="grid-template-columns:1fr 1fr">
+        <div class="card rv" style="--i:3"><div class="n">01</div><h3>O militar como ativo</h3><p>O policial militar é o principal ativo estratégico da Corporação.</p></div>
+        <div class="card rv" style="--i:4"><div class="n">02</div><h3>Decisão por evidência</h3><p>Decisões orientadas por evidências científicas e indicadores institucionais.</p></div>
+        <div class="card rv" style="--i:5"><div class="n">03</div><h3>Integração</h3><p>Preparação física, saúde ocupacional e gestão de pessoas atuando juntas.</p></div>
+        <div class="card rv" style="--i:6"><div class="n">04</div><h3>Recursos existentes</h3><p>Uso racional da infraestrutura e das pessoas já disponíveis.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · EIXOS -->
+<section class="s" id="eixos" data-title="Seis eixos">
+  <div class="in">
+    <div class="eb rv">Estrutura do programa</div>
+    <h2 class="h2 rv" style="--i:1">Seis eixos <span class="k">estratégicos</span></h2>
+    <div class="grid3" style="margin-top:36px">
+      <div class="eixo rv" style="--i:2"><div class="num">1</div><h3>Governança, Inteligência e Gestão Estratégica</h3><p>Coordenação do programa, indicadores e apoio à decisão do Comando.</p></div>
+      <div class="eixo rv" style="--i:3"><div class="num">2</div><h3>Preparação Física e Desempenho Operacional</h3><p>Avaliação, planejamento e execução do treinamento físico.</p></div>
+      <div class="eixo rv" style="--i:4"><div class="num">3</div><h3>Saúde Ocupacional e Prevenção de Incapacidades</h3><p>Articulação com os profissionais de saúde e ações preventivas.</p></div>
+      <div class="eixo rv" style="--i:5"><div class="num">4</div><h3>Nutrição, Composição Corporal e Estilo de Vida</h3><p>Bioimpedância, recordatório alimentar e orientação de hábitos.</p></div>
+      <div class="eixo rv" style="--i:6"><div class="num">5</div><h3>Educação, Pesquisa, Inovação e Desenvolvimento</h3><p>Produção de conhecimento institucional a partir dos dados do programa.</p></div>
+      <div class="eixo rv" style="--i:7"><div class="num">6</div><h3>Avaliação de Resultados, Qualidade e Melhoria Contínua</h3><p>Monitoramento, relatórios periódicos e revisão dos processos.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · CICLO -->
+<section class="s alt" id="ciclo" data-title="Como funciona">
+  <div class="grid"></div>
+  <div class="in">
+    <div>
+      <div class="eb rv">Como funciona</div>
+      <h2 class="h2 rv" style="--i:1">Do treino à <span class="k">decisão do Comando</span></h2>
+      <p class="lead rv" style="--i:2">Um ciclo permanente de gestão: cada avaliação vira dado, cada dado vira indicador, cada indicador apoia uma decisão. Clique nas etapas.</p>
+      <div id="cycdesc" class="rv" style="--i:3"></div>
+    </div>
+    <svg id="cyc" viewBox="0 0 1120 720" role="img" aria-label="Ciclo de gestão do PIPHPO com oito etapas"></svg>
+  </div>
+</section>
+
+<!-- 8 · COMPARATIVO -->
+<section class="s" id="paradigma" data-title="Mudança de paradigma">
+  <div class="in">
+    <div class="eb rv">Uma mudança de paradigma</div>
+    <h2 class="h2 rv" style="--i:1">Do modelo tradicional ao <span class="k">modelo proposto</span></h2>
+    <table class="cmp">
+      <thead><tr><th>Modelo tradicional</th><th class="k">Modelo proposto pelo PIPHPO</th></tr></thead>
+      <tbody>
+        <tr class="rv" style="--i:2"><td>Academia voltada ao treinamento físico</td><td>Centro de gestão da performance humana</td></tr>
+        <tr class="rv" style="--i:3"><td>Ênfase na atividade física</td><td>Ênfase na capacidade operacional</td></tr>
+        <tr class="rv" style="--i:4"><td>Informações isoladas</td><td>Gestão baseada em indicadores</td></tr>
+        <tr class="rv" style="--i:5"><td>Acompanhamento pontual</td><td>Monitoramento contínuo da evolução funcional</td></tr>
+        <tr class="rv" style="--i:6"><td>Atuação setorial</td><td>Integração multiprofissional</td></tr>
+        <tr class="rv" style="--i:7"><td>Ações predominantemente reativas</td><td>Gestão preventiva e baseada em evidências</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 9 · NA PRÁTICA -->
+<section class="s alt" id="pratica" data-title="Na prática">
+  <div class="grid"></div>
+  <div class="in">
+    <div>
+      <div class="eb rv">Na prática</div>
+      <h2 class="h2 rv" style="--i:1">O militar chega com a <span class="k">ficha pronta</span></h2>
+      <p class="lead rv" style="--i:2">Um portal simples, pelo celular. O avaliador recebe tudo antes da avaliação e usa o tempo com o militar para o que importa.</p>
+      <div class="steps">
+        <div class="step rv" style="--i:3"><b>1</b><div>Agenda a bioimpedância<small>Escolhe dia e horário e confirma as orientações de preparo.</small></div></div>
+        <div class="step rv" style="--i:4"><b>2</b><div>Preenche a anamnese e o PAR-Q<small>Triagem de segurança, histórico de saúde, rotina e objetivo.</small></div></div>
+        <div class="step rv" style="--i:5"><b>3</b><div>Envia fotos posturais e o recordatório 24h<small>Para a avaliação postural e nutricional.</small></div></div>
+        <div class="step rv" style="--i:6"><b>4</b><div>O avaliador vê a agenda com alertas<small>Qualquer "sim" no PAR-Q ou contraindicação à bioimpedância aparece antes do militar chegar.</small></div></div>
+      </div>
+      <div class="ctas rv" style="--i:7;margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn primary" href="../prototipo/index.html" target="_blank" rel="noopener">Abrir o protótipo em tela cheia ↗</a>
+      </div>
+    </div>
+    <div class="phone rv" style="--i:3">
+      <iframe src="../prototipo/index.html" title="Protótipo do portal de pré-avaliação" loading="lazy"></iframe>
+      <span class="lbl">Protótipo interativo · dados de exemplo</span>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · VÍDEO -->
+<section class="s" id="video" data-title="Vídeo">
+  <div class="in">
+    <div class="eb rv">Em 80 segundos</div>
+    <h2 class="h2 rv" style="--i:1">O pitch em <span class="k">vídeo</span></h2>
+    <div class="vid rv" style="--i:2">
+      <video controls preload="none" playsinline poster="assets/capa.png">
+        <source src="../video/out/PIPHPO_pitch_Guarnicao_Patos_de_Minas.mp4" type="video/mp4">
+        Seu navegador não reproduz o vídeo. <a href="../video/out/PIPHPO_pitch_Guarnicao_Patos_de_Minas.mp4">Baixe o arquivo.</a>
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · PILOTO -->
+<section class="s alt" id="piloto" data-title="Projeto-piloto">
+  <div class="grid"></div>
+  <div class="in">
+    <div class="eb rv">A proposta ao Comando</div>
+    <h2 class="h2 rv" style="--i:1">Projeto-piloto na <span class="k">Guarnição de Patos de Minas</span></h2>
+    <div class="kpis">
+      <div class="kpi rv" style="--i:2"><b data-count="12">0</b><span>meses de execução, com avaliação final</span></div>
+      <div class="kpi rv" style="--i:3"><b data-count="6">0</b><span>eixos estratégicos integrados</span></div>
+      <div class="kpi red rv" style="--i:4"><b data-count="0">0</b><span>novos cargos: usa a estrutura existente</span></div>
+      <div class="kpi rv" style="--i:5"><b data-count="1">0</b><span>relatório técnico para decidir a expansão</span></div>
+    </div>
+    <div class="tl rv" style="--i:6">
+      <div class="months"><span>M1</span><span>M2</span><span>M3</span><span>M4</span><span>M5</span><span>M6</span><span>M7</span><span>M8</span><span>M9</span><span>M10</span><span>M11</span><span>M12</span></div>
+      <div class="row"><div class="bar" style="grid-column:1/2;transition-delay:.1s">Planej.</div><div class="bar g" style="grid-column:2/4;transition-delay:.4s">Implantação</div><div class="bar" style="grid-column:4/11;transition-delay:.7s">Execução assistida</div><div class="bar r" style="grid-column:11/13;transition-delay:1s">Avaliação final</div></div>
+      <div class="cap">
+        <div><b>Mês 1 · Planejamento</b>Organização, protocolos e capacitação inicial.</div>
+        <div><b>Meses 2–3 · Implantação</b>Início das avaliações e estruturação dos fluxos.</div>
+        <div><b>Meses 4–10 · Execução assistida</b>Atividades, monitoramento e relatórios periódicos.</div>
+        <div><b>Meses 11–12 · Avaliação final</b>Consolidação dos indicadores e relatório técnico.</div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="rv" style="--i:7"><small>Unidade piloto</small>Guarnição de Patos de Minas (10ª RPM)</div>
+      <div class="rv" style="--i:8"><small>Recursos</small>Infraestrutura, equipamentos e pessoas já existentes</div>
+      <div class="rv" style="--i:9"><small>Coordenação técnica</small>Conforme designação do Comando, observada a legislação</div>
+      <div class="rv" style="--i:10"><small>Avaliação</small>Relatórios periódicos e avaliação final por indicadores</div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · CRITÉRIOS -->
+<section class="s" id="criterios" data-title="Critérios de avaliação">
+  <div class="in">
+    <div class="eb rv">Como o piloto será avaliado</div>
+    <h2 class="h2 rv" style="--i:1">Indicadores definidos <span class="k">antes</span> de começar</h2>
+    <div class="chips">
+      <div class="chip rv" style="--i:2"><i>1</i>Adesão do efetivo às ações propostas</div>
+      <div class="chip rv" style="--i:3"><i>2</i>Percentual de militares avaliados</div>
+      <div class="chip rv" style="--i:4"><i>3</i>Utilização da academia institucional</div>
+      <div class="chip rv" style="--i:5"><i>4</i>Evolução dos indicadores físicos e funcionais</div>
+      <div class="chip rv" style="--i:6"><i>5</i>Cumprimento dos protocolos</div>
+      <div class="chip rv" style="--i:7"><i>6</i>Produção de relatórios gerenciais</div>
+      <div class="chip rv" style="--i:8"><i>7</i>Percepção dos gestores sobre a utilidade das informações</div>
+    </div>
+    <div class="note rv" style="--i:9"><b>Sem promessa antes da medição.</b> Benefícios como redução de afastamentos ou de custos assistenciais poderão ser avaliados durante o piloto, conforme os dados produzidos, sem pressupor resultados antes de medi-los.</div>
+  </div>
+</section>
+
+<!-- 13 · BENEFÍCIOS -->
+<section class="s alt" id="beneficios" data-title="Benefícios esperados">
+  <div class="grid"></div>
+  <div class="in">
+    <div class="eb rv">Benefícios esperados</div>
+    <h2 class="h2 rv" style="--i:1">Ganhos em <span class="k">cinco dimensões</span></h2>
+    <div class="grid3" style="margin-top:34px">
+      <div class="ben rv" style="--i:2"><h3>Operacional</h3><ul><li>Fortalecimento da prontidão operacional</li><li>Maior disponibilidade do efetivo</li><li>Padronização da preparação física</li></ul></div>
+      <div class="ben rv" style="--i:3"><h3>Gestão</h3><ul><li>Indicadores para a tomada de decisão</li><li>Planejamento baseado em evidências</li><li>Relatórios periódicos ao Comando</li></ul></div>
+      <div class="ben rv" style="--i:4"><h3>Saúde ocupacional</h3><ul><li>Promoção da saúde e prevenção</li><li>Acompanhamento sistemático</li><li>Identificação precoce de necessidades</li></ul></div>
+      <div class="ben rv" style="--i:5"><h3>Institucional</h3><ul><li>Valorização do policial militar</li><li>Cultura de prevenção e melhoria contínua</li><li>Modelo replicável em outras unidades</li></ul></div>
+      <div class="ben rv" style="--i:6"><h3>Eficiência administrativa</h3><ul><li>Melhor uso da infraestrutura existente</li><li>Processos organizados</li><li>Informações hoje dispersas, integradas</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · ENCAMINHAMENTO -->
+<section class="s" id="pedido" data-title="Encaminhamento">
+  <div class="stripes" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+  <div class="in">
+    <div class="eb rv">Encaminhamento ao Comando</div>
+    <h2 class="h2 rv" style="--i:1">O que se <span class="k">solicita</span></h2>
+    <div class="box rv" style="--i:2;margin-top:30px">
+      <p class="ask">Submete-se à apreciação do <b>Comando da 10ª Região da Polícia Militar</b> a presente proposta, para autorização da implantação do Projeto-Piloto do PIPHPO na <b>Guarnição de Patos de Minas</b>, pelo período inicial de <b>12 (doze) meses</b>.</p>
+      <div class="after">
+        <div><b>Ao fim do período</b>Relatório técnico com resultados, indicadores e lições aprendidas.</div>
+        <div><b>Recomendação</b>Continuidade, aperfeiçoamento ou expansão para outras unidades.</div>
+        <div><b>Decisão</b>Fundamentada em evidências produzidas na própria Corporação.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 · FIM -->
+<section class="s alt" id="fim" data-title="Encerramento">
+  <div class="grid"></div>
+  <div class="in">
+    <img class="crest rv" src="assets/brasao.png" alt="">
+    <p class="lib rv" style="--i:1">Libertas quæ sera tamen</p>
+    <h2 class="motto rv" style="--i:2">“Fortalecer a performance humana para ampliar a <span class="k">capacidade operacional</span>.”</h2>
+    <div class="sig rv" style="--i:3">
+      <span class="a">PIPHPO · Guarnição de Patos de Minas · 10ª RPM</span>
+      <span class="b">Proposta: Cb PM Leandro Carvalho Delavy</span>
+      <span class="c">Graduado em Educação Física (CREF-MG) · Especialista em Treinamento Físico, Atividade Física e Saúde, e Nutrição no Esporte</span>
+      <span class="c">Patos de Minas – MG · 2026</span>
+    </div>
+    <p class="decl rv" style="--i:4">Esta proposta tem finalidade exclusivamente institucional. Não objetiva vantagem funcional nem a designação de servidor específico. Se aprovada, poderá ser conduzida por policial militar ou profissional legalmente habilitado designado pelo Comando, observadas as necessidades do serviço e a legislação vigente.</p>
+  </div>
+</section>
+
+</main>
+
+<div id="help" hidden>
+  <div class="p" role="dialog" aria-modal="true" aria-labelledby="helpt">
+    <h3 id="helpt">Atalhos da apresentação</h3>
+    <dl>
+      <dt><kbd>→</kbd> <kbd>↓</kbd> <kbd>espaço</kbd></dt><dd>Próxima seção</dd>
+      <dt><kbd>←</kbd> <kbd>↑</kbd></dt><dd>Seção anterior</dd>
+      <dt><kbd>Home</kbd> / <kbd>End</kbd></dt><dd>Início / fim</dd>
+      <dt><kbd>F</kbd></dt><dd>Tela cheia</dd>
+      <dt><kbd>?</kbd></dt><dd>Esta ajuda</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Fechar</dd>
+    </dl>
+    <button class="btn cl" id="helpclose" type="button">Fechar</button>
+  </div>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const secs=$$('main > section');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur=0;
+
+/* navegação lateral */
+const dots=$('#dots');
+secs.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.innerHTML=`<span>${s.dataset.title}</span>`;b.setAttribute('aria-label',s.dataset.title);b.onclick=()=>goTo(i);dots.appendChild(b)});
+function goTo(i){i=Math.max(0,Math.min(secs.length-1,i));secs[i].scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'})}
+function setCur(i){cur=i;$('#cnt').textContent=String(i+1).padStart(2,'0')+' / '+String(secs.length).padStart(2,'0');$('#secname').textContent=secs[i].dataset.title;$$('#dots button').forEach((b,j)=>b.setAttribute('aria-current',j===i))}
+const secObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){setCur(secs.indexOf(e.target));e.target.classList.add('on')}})},{threshold:.45});
+secs.forEach(s=>secObs.observe(s));
+
+/* progresso */
+const prog=$('#progress');
+function onScroll(){const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight||1);prog.style.width=(p*100)+'%'}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* reveal */
+const rvObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');rvObs.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -5% 0px'});
+$$('.rv').forEach(el=>rvObs.observe(el));
+
+/* tese: palavras */
+const tq=$('#tq');const TXT='A capacidade operacional da Polícia Militar depende diretamente da |capacidade humana| do seu efetivo.';
+let hi=false;tq.innerHTML=TXT.split(' ').map((w,i)=>{let k='';if(w.startsWith('|')){hi=true;w=w.slice(1)}if(w.endsWith('|')){w=w.slice(0,-1);k=' k';hi=false;return `<i class="w${' k'}" style="--i:${i}">${w}</i>`}return `<i class="w${hi?' k':''}" style="--i:${i}">${w}</i>`}).join(' ');
+
+/* contadores */
+const cntObs=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,n=+el.dataset.count,t0=performance.now(),d=reduced?0:1300;cntObs.unobserve(el);
+ (function tick(t){const p=d?Math.min(1,(t-t0)/d):1;const k=1-Math.pow(1-p,3);el.textContent=Math.round(n*k);if(p<1)requestAnimationFrame(tick)})(t0)})},{threshold:.6});
+$$('[data-count]').forEach(el=>cntObs.observe(el));
+
+/* ciclo */
+const STEPS=[
+ ['Policial Militar','O ciclo começa e termina no policial militar, principal ativo estratégico da Corporação.','Preservar, desenvolver e fortalecer sua capacidade operacional.'],
+ ['Avaliação','Protocolos padronizados para levantar as condições físicas e funcionais e os indicadores acompanhados.','Estabelecer o diagnóstico inicial e identificar necessidades individuais e coletivas.'],
+ ['Planejamento','Elaboração dos programas de treinamento e das ações de promoção da saúde, a partir das avaliações e das demandas da Unidade.','Definir intervenções com critérios técnicos e científicos.'],
+ ['Treinamento','Execução das atividades, observando os princípios do treinamento, a progressão das cargas e a prevenção de lesões.','Desenvolver e manter a capacidade física exigida pela atividade policial.'],
+ ['Monitoramento','Acompanhamento sistemático da participação, da evolução e das intercorrências.','Verificar a efetividade das ações e ajustar o que for preciso.'],
+ ['Dashboard gerencial','Dados consolidados em painéis: militares avaliados, participação, uso da academia, evolução da aptidão, adesão.','Visão integrada da situação da Unidade.'],
+ ['Relatórios ao Comando','Indicadores transformados em relatórios técnicos e gerenciais.','Subsidiar o planejamento institucional e a tomada de decisão.'],
+ ['Melhoria contínua','As decisões do Comando e as informações produzidas retroalimentam o sistema.','Aperfeiçoamento permanente dos processos e das ações.']];
+const svg=$('#cyc');const NS='http://www.w3.org/2000/svg';const CX=560,CY=360,R=250;
+const mk=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+svg.appendChild(mk('circle',{class:'ring',cx:CX,cy:CY,r:R}));
+const arc=mk('circle',{class:'arc',cx:CX,cy:CY,r:R,transform:`rotate(-90 ${CX} ${CY})`});const L=2*Math.PI*R;arc.setAttribute('stroke-dasharray',L);arc.style.strokeDashoffset=L;arc.style.strokeDasharray=L;svg.appendChild(arc);
+const ctr=mk('text',{class:'ctr',x:CX,y:CY-14});ctr.innerHTML=`<tspan x="${CX}" dy="0">Capacidade</tspan><tspan x="${CX}" dy="26">Operacional</tspan><tspan x="${CX}" dy="26">Sustentável</tspan>`;svg.appendChild(ctr);
+const nodes=STEPS.map((s,i)=>{const a=-Math.PI/2+i*2*Math.PI/STEPS.length,x=CX+R*Math.cos(a),y=CY+R*Math.sin(a);
+ const g=mk('g',{class:'node'+(i===6?' cmd':''),tabindex:0,role:'button','aria-label':s[0]});
+ g.appendChild(mk('circle',{cx:x,cy:y,r:24}));const n=mk('text',{class:'num',x:x,y:y+6,'text-anchor':'middle'});n.textContent=i+1;g.appendChild(n);
+ const right=Math.cos(a)>.1,left=Math.cos(a)<-.1;const t=mk('text',{x:right?x+36:left?x-36:x,y:y+(Math.sin(a)<-.5?-36:Math.sin(a)>.5?48:6),'text-anchor':right?'start':left?'end':'middle'});t.textContent=s[0];g.appendChild(t);
+ g.addEventListener('click',()=>{sel(i);pause()});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();sel(i);pause()}});svg.appendChild(g);return g});
+const desc=$('#cycdesc');let si=-1,timer=null,paused=0;
+function sel(i){si=i;nodes.forEach((n,j)=>n.classList.toggle('on',j===i));const s=STEPS[i];desc.innerHTML=`<div class="t"><i>ETAPA ${i+1}</i>${s[0]}</div><p>${s[1]}</p><p class="o"><b>Objetivo:</b> ${s[2]}</p>`}
+function pause(){paused=Date.now()+12000}
+sel(0);
+new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){arc.style.strokeDashoffset=0;if(!timer&&!reduced)timer=setInterval(()=>{if(Date.now()<paused)return;sel((si+1)%STEPS.length)},2800)}else{clearInterval(timer);timer=null}})},{threshold:.4}).observe($('#ciclo'));
+
+/* teclado */
+const help=$('#help');
+function toggleHelp(f){help.hidden=f===undefined?!help.hidden:!f}
+function toggleFs(){if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{})}else document.exitFullscreen()}
+$('#fsbtn').onclick=toggleFs;$('#helpbtn').onclick=()=>toggleHelp();$('#helpclose').onclick=()=>toggleHelp(false);help.addEventListener('click',e=>{if(e.target===help)toggleHelp(false)});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea,select,video'))return;
+  const k=e.key;
+  if(k==='Escape'){toggleHelp(false);return}
+  if(!help.hidden)return;
+  if(['ArrowDown','ArrowRight','PageDown',' '].includes(k)){e.preventDefault();goTo(cur+1)}
+  else if(['ArrowUp','ArrowLeft','PageUp'].includes(k)){e.preventDefault();goTo(cur-1)}
+  else if(k==='Home'){e.preventDefault();goTo(0)}
+  else if(k==='End'){e.preventDefault();goTo(secs.length-1)}
+  else if(k==='f'||k==='F'){toggleFs()}
+  else if(k==='?'){toggleHelp()}
+});
+})();
+</script>
+</body>
+</html>

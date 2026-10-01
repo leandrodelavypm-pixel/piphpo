@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>PIPHPO Avaliação</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -186,12 +191,14 @@ legend{font-family:var(--display);font-size:1.25rem;font-weight:600;padding:0;ma
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="top">
     <div class="brand">
       <b>PIPHPO <span class="proto">Protótipo</span></b>
-      <span>Pré-avaliação e agendamento da bioimpedância · Projeto-piloto 15º BPM</span>
+      <span>Pré-avaliação e agendamento da bioimpedância · Projeto-piloto · Guarnição de Patos de Minas</span>
     </div>
     <div class="seg" role="group" aria-label="Trocar visão">
       <button type="button" id="v-mil" aria-pressed="true">Portal do militar</button>
@@ -548,7 +555,7 @@ function submit(){
   bookings.push(b);admDay=b.date;admSel=b;
   $$('#f > section').forEach(s=>s.hidden=s.dataset.step!=='done');
   $('#nav').hidden=true;
-  $('#done-when').textContent=fmt(b.date)+' às '+b.time+' · Academia do 15º BPM';
+  $('#done-when').textContent=fmt(b.date)+' às '+b.time+' · Academia da Guarnição de Patos de Minas';
   $('#done-code').textContent=code;
 }
 $('#goadm').onclick=()=>view('adm');
@@ -612,3 +619,6 @@ $('#v-mil').onclick=()=>view('mil');$('#v-adm').onclick=()=>view('adm');
 go(0,true);
 })();
 </script>
+
+</body>
+</html>

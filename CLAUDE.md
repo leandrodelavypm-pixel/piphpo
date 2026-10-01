@@ -16,6 +16,7 @@ Use sempre **"Guarnição de Patos de Minas"**, nunca "15º BPM" (nomenclatura a
 - Grafismo: faixas diagonais cáqui e cinza (referência às viaturas).
 
 ## Estrutura
+- `site/index.html`: apresentação em site (substitui slides). Seções `<section class="s" data-title>` em `main`; navegação por teclado e pontos laterais são gerados a partir delas. Ciclo em SVG montado por JS (`STEPS`). Protótipo embutido por iframe (`../prototipo/index.html`) e vídeo por caminho relativo (`../video/out/`). `index.html` na raiz só redireciona para `site/`.
 - `prototipo/index.html`: protótipo autocontido (HTML/CSS/JS vanilla, estado em memória). Base para o sistema real.
 - `video/src/pitch.html`: animação do pitch. Cada cena é controlada em `render(t)` por janelas de tempo (`fade(el,t,in0,in1,out0,out1)`). Para mudar o texto, edite o HTML. Para mudar o tempo, edite os números em `render`.
 - `video/scripts/render.py`: render Playwright para ffmpeg. Capa de 2 s com crossfade no início (a miniatura do WhatsApp usa o 1º quadro).
