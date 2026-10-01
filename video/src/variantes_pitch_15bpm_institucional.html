@@ -1,0 +1,319 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:BC;src:url(../node_modules/@fontsource/barlow-condensed/files/barlow-condensed-latin-400-normal.woff2);font-weight:400}
+@font-face{font-family:BC;src:url(../node_modules/@fontsource/barlow-condensed/files/barlow-condensed-latin-600-normal.woff2);font-weight:600}
+@font-face{font-family:BC;src:url(../node_modules/@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:BC;src:url(../node_modules/@fontsource/barlow-condensed/files/barlow-condensed-latin-800-normal.woff2);font-weight:800}
+@font-face{font-family:B;src:url(../node_modules/@fontsource/barlow/files/barlow-latin-400-normal.woff2);font-weight:400}
+@font-face{font-family:B;src:url(../node_modules/@fontsource/barlow/files/barlow-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:B;src:url(../node_modules/@fontsource/barlow/files/barlow-latin-600-normal.woff2);font-weight:600}
+:root{--bg:#111213;--ink:#F1EEE7;--kaki:#B7A076;--kaki2:#8F7B55;--red:#C21F2B;--muted:#9A9D9F;--panel:#1C1D1F;--line:#34373A;--gray:#6E7275}
+*{box-sizing:border-box}
+html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:B,sans-serif}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg)}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(154,157,159,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(154,157,159,.05) 1px,transparent 1px);background-size:96px 96px}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.6));pointer-events:none}
+.scene{position:absolute;inset:0;opacity:0}
+.abs{position:absolute}
+.lbl{font:600 26px BC;letter-spacing:.22em;text-transform:uppercase;color:var(--kaki);display:flex;align-items:center;gap:18px}
+.lbl::before{content:"";width:48px;height:4px;background:var(--red)}
+.h{font:700 84px/1.02 BC;letter-spacing:.005em}
+.k{color:var(--kaki)}
+.r{color:var(--red)}
+/* bug */
+#bug{position:absolute;left:72px;bottom:56px;display:flex;align-items:center;gap:14px;font:600 22px BC;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);opacity:0}
+#bar{position:absolute;left:0;bottom:0;height:5px;background:var(--red);width:0}
+/* S1 */
+#crest1{position:absolute;left:50%;top:250px;height:480px;margin-left:-215px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.6))}
+#s1top{left:0;right:0;top:160px;text-align:center;font:600 34px BC;letter-spacing:.34em;color:var(--kaki)}
+#s1sub{left:0;right:0;top:790px;text-align:center;font:500 26px B;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+#thesis{left:180px;top:300px;width:1500px}
+#thesis .h{font-size:104px}
+#thesis .w{display:inline-block;opacity:0}
+/* S2 */
+.col{position:absolute;top:330px;width:700px;display:flex;flex-direction:column;gap:34px}
+.col h3{margin:0 0 6px;font:700 44px BC;letter-spacing:.06em;text-transform:uppercase}
+.item{display:flex;align-items:center;gap:26px;font:500 40px B;opacity:0}
+.ic{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;font:800 34px BC}
+.ic.ok{border:3px solid var(--kaki);color:var(--kaki)}
+.ic.no{background:var(--red);color:#fff}
+#s2stmt{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--kaki);color:#111213;opacity:0}
+#s2stmt .h{font-size:150px;text-align:center;line-height:1}
+/* S3 */
+#s3{display:flex}
+#brand{position:absolute;left:0;right:0;top:330px;display:flex;justify-content:center;align-items:center;gap:48px}
+#brand .name{font:800 280px/0.9 BC;letter-spacing:.06em}
+#s3full{left:0;right:0;top:640px;text-align:center;font:500 44px B;color:var(--ink)}
+#s3line{left:50%;top:620px;height:4px;background:var(--kaki);width:0;transform:translateX(-50%)}
+#s3pilot{left:0;right:0;top:730px;text-align:center;font:600 30px BC;letter-spacing:.3em;color:var(--kaki);text-transform:uppercase}
+/* S4 */
+#s4left{left:140px;top:300px;width:540px}
+#s4left .h{font-size:82px;margin-top:26px}
+#s4left p{font:400 34px/1.35 B;color:var(--muted);margin:30px 0 0}
+#cyc{position:absolute;left:860px;top:40px}
+.node{position:absolute;display:flex;align-items:center;gap:14px;opacity:0;font:600 30px BC;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.node .n{width:58px;height:58px;border-radius:50%;background:var(--bg);border:3px solid var(--kaki);color:var(--kaki);display:grid;place-items:center;font:700 30px BC;flex:0 0 auto}
+.node.cmd .n{background:var(--red);border-color:var(--red);color:#fff}
+#cycc{position:absolute;text-align:center;font:700 40px/1.08 BC;letter-spacing:.08em;text-transform:uppercase;color:var(--kaki);opacity:0;width:340px}
+/* S5 */
+#s5left{left:140px;top:170px;width:700px}
+#s5left .h{font-size:78px;margin:24px 0 46px}
+.step{display:flex;gap:24px;align-items:flex-start;font:500 35px/1.3 B;margin-bottom:34px;opacity:0}
+.step b{font:700 40px BC;color:var(--red);width:40px;flex:0 0 auto;line-height:1.15}
+#phone{position:absolute;left:910px;top:150px;width:370px;height:760px;border-radius:52px;background:#0C0B08;border:3px solid #3C382E;padding:16px;box-shadow:0 40px 80px rgba(0,0,0,.5)}
+#scr{position:relative;width:100%;height:100%;border-radius:38px;background:#F4F1EA;overflow:hidden;color:#1B1A16}
+.pscr{position:absolute;inset:0;padding:54px 24px 24px;opacity:0;font-family:B}
+.pt{font:700 34px BC;margin:0 0 4px}
+.ps{font:400 17px B;color:#6B6558;margin:0 0 20px}
+.days{display:flex;gap:8px;margin-bottom:18px}
+.d{flex:1;border:2px solid #D8D1C2;border-radius:10px;text-align:center;padding:6px 0;font:600 14px B;color:#6B6558}
+.d b{display:block;font:700 26px BC;color:#1B1A16}
+.d.on{border-color:#1B1A16;background:#1B1A16;color:#BBA36F}.d.on b{color:#fff}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sl{border:2px solid #D8D1C2;border-radius:8px;text-align:center;padding:9px 0;font:600 18px B}
+.sl.x{background:#E7E2D7;color:#A8A091;text-decoration:line-through;border-color:#E7E2D7}
+.sl.on{background:#C21F2B;border-color:#C21F2B;color:#fff}
+.pbtn{position:absolute;left:24px;right:24px;bottom:28px;background:#1B1A16;color:#fff;text-align:center;border-radius:12px;padding:16px 0;font:600 20px B}
+.ck{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid #DDD6C8;font:500 21px B}
+.ckb{width:34px;height:34px;border-radius:50%;border:2px solid #CFC7B6;display:grid;place-items:center;color:#fff;font:700 20px B;flex:0 0 auto}
+.ckb.on{background:#2E7D4F;border-color:#2E7D4F}
+.conf{text-align:center;padding-top:60px}
+.conf .big{width:96px;height:96px;border-radius:50%;background:#DDF0E3;margin:0 auto 22px;display:grid;place-items:center}
+.code{display:inline-block;font:700 34px BC;letter-spacing:.12em;background:#E7E2D7;border-radius:8px;padding:6px 18px;margin:18px 0}
+#tap{position:absolute;width:64px;height:64px;border-radius:50%;border:4px solid #C21F2B;opacity:0;pointer-events:none}
+#pan{position:absolute;left:1340px;top:250px;width:470px;background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:26px;opacity:0;box-shadow:0 30px 60px rgba(0,0,0,.45)}
+#pan h4{margin:0 0 4px;font:700 30px BC;letter-spacing:.06em;text-transform:uppercase}
+#pan .sub{font:400 19px B;color:var(--muted);margin-bottom:16px}
+.ar{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line);font:500 20px B}
+.ar .t{font:700 22px BC;color:var(--kaki)}
+.mk{display:flex;gap:4px}.mk span{width:26px;height:26px;border-radius:5px;display:grid;place-items:center;font:700 14px B;background:#2A3A2F;color:#7FCB98}.mk span.no{background:#2C2A23;color:#6E6757}
+.al{display:inline-block;margin-left:8px;font:700 13px B;background:#4A1D22;color:#F29AA4;padding:2px 8px;border-radius:99px;vertical-align:2px}
+/* S6 */
+#s6head{left:140px;top:150px}
+#s6head .h{margin-top:22px}
+#tiles{position:absolute;left:140px;right:140px;top:430px;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.tile{border-top:6px solid #111213;background:var(--kaki);padding:34px 34px 38px;opacity:0}
+.tile .num{font:800 150px/0.9 BC;color:#111213}
+.tile .cap{font:500 32px/1.2 B;color:#2A2B2C;margin-top:14px}
+.tile.red{border-top-color:var(--red)}
+#s6foot{left:140px;right:140px;top:830px;font:500 38px B;color:var(--ink);opacity:0}
+/* S7 */
+#s7tri{position:absolute;left:50%;top:80px;height:240px;margin-left:-107px}
+#motto{left:200px;right:200px;top:420px;text-align:center}
+#motto .h{font-size:100px;line-height:1.05}
+#lib{left:0;right:0;top:345px;text-align:center;font:italic 400 26px B;letter-spacing:.14em;color:var(--kaki2)}
+#cred{left:0;right:0;top:760px;text-align:center;display:flex;flex-direction:column;gap:12px;opacity:0}
+#cred .a{font:700 40px BC;letter-spacing:.2em;text-transform:uppercase;color:var(--kaki)}
+#cred .b{font:500 30px B;color:var(--ink)}
+#cred .c{font:400 26px B;color:var(--muted);letter-spacing:.1em}
+#black{position:absolute;inset:0;background:#000;opacity:0}
+</style></head>
+<body><div id="stage">
+<div class="grid"></div><div id="graf" style="position:absolute;right:-120px;bottom:-40px;width:760px;height:260px;transform:skewX(-28deg);pointer-events:none">
+<div style="position:absolute;right:0;bottom:0;width:100%;height:120px;background:var(--kaki)"></div>
+<div style="position:absolute;right:0;bottom:132px;width:82%;height:26px;background:var(--gray)"></div>
+<div style="position:absolute;right:0;bottom:170px;width:62%;height:10px;background:var(--gray);opacity:.6"></div></div>
+
+<!-- S1 -->
+<div class="scene" id="s1">
+  <div class="abs" id="s1top">POLÍCIA MILITAR DE MINAS GERAIS</div>
+  <img id="crest1" src="../assets/brasao.png" alt="">
+  <div class="abs" id="s1sub">10ª Região · 15º Batalhão · Patos de Minas</div>
+</div>
+<div class="scene" id="s1b">
+  <div class="abs" id="thesis"><div class="lbl" id="thlbl">Tese institucional</div><div class="h" id="thtext" style="margin-top:34px"></div></div>
+</div>
+
+<!-- S2 -->
+<div class="scene" id="s2">
+  <div class="abs lbl" style="left:140px;top:170px" id="s2lbl">O cenário atual no 15º BPM</div>
+  <div class="col" style="left:140px" id="c1"><h3 class="k">O que já existe</h3>
+    <div class="item"><span class="ic ok">✓</span>Academia de musculação</div>
+    <div class="item"><span class="ic ok">✓</span>Equipamentos de treino</div>
+    <div class="item"><span class="ic ok">✓</span>Efetivo interessado</div>
+  </div>
+  <div class="col" style="left:1000px" id="c2"><h3 class="r">O que falta</h3>
+    <div class="item"><span class="ic no">✕</span>Avaliação física padronizada</div>
+    <div class="item"><span class="ic no">✕</span>Acompanhamento da evolução</div>
+    <div class="item"><span class="ic no">✕</span>Indicadores para o Comando</div>
+  </div>
+  <div id="s2stmt"><div class="h">A estrutura existe.</div><div class="h r" id="s2b" style="margin-top:10px">Falta gestão.</div></div>
+</div>
+
+<!-- S3 -->
+<div class="scene" id="s3">
+  <div id="brand"><svg width="190" height="166" viewBox="0 0 260 226"><polygon points="130,8 252,218 8,218" fill="#C21F2B"/></svg><div class="name">PIPHPO</div></div>
+  <div class="abs" id="s3line"></div>
+  <div class="abs" id="s3full">Programa Institucional de Performance Humana e Prontidão Operacional</div>
+  <div class="abs" id="s3pilot">Projeto-piloto de inovação em gestão pública</div>
+</div>
+
+<!-- S4 -->
+<div class="scene" id="s4">
+  <div class="abs" id="s4left"><div class="lbl">Como funciona</div><div class="h">Do treino à decisão do Comando</div><p>Cada avaliação vira dado. Cada dado vira indicador. Cada indicador apoia uma decisão.</p></div>
+  <svg id="cyc" width="1000" height="1000" viewBox="0 0 1000 1000">
+    <circle cx="500" cy="500" r="300" fill="none" stroke="#3A362B" stroke-width="4"/>
+    <circle id="arc" cx="500" cy="500" r="300" fill="none" stroke="#BBA36F" stroke-width="6" stroke-linecap="round" transform="rotate(-90 500 500)"/>
+    <circle id="orb" r="11" fill="#C21F2B" opacity="0"/>
+  </svg>
+  <div id="nodes"></div>
+  <div id="cycc">Capacidade<br>Operacional<br>Sustentável</div>
+</div>
+
+<!-- S5 -->
+<div class="scene" id="s5">
+  <div class="abs" id="s5left"><div class="lbl">Na prática</div><div class="h">O militar chega com a ficha pronta</div>
+    <div class="step" id="st1"><b>1</b><span>Agenda a bioimpedância pelo celular</span></div>
+    <div class="step" id="st2"><b>2</b><span>Preenche anamnese, fotos e recordatório 24h antes</span></div>
+    <div class="step" id="st3"><b>3</b><span>Recebe o código e as orientações de preparo</span></div>
+    <div class="step" id="st4"><b>4</b><span>O avaliador recebe tudo antes da avaliação</span></div>
+  </div>
+  <div id="phone"><div id="scr">
+    <div class="pscr" id="pA"><p class="pt">Agendar bioimpedância</p><p class="ps">Escolha o dia e o horário</p>
+      <div class="days"><div class="d">qui<b>1</b></div><div class="d on">sex<b>2</b></div><div class="d">seg<b>5</b></div><div class="d">ter<b>6</b></div></div>
+      <div class="slots"><div class="sl x">07:00</div><div class="sl x">07:30</div><div class="sl" id="sl8">08:00</div><div class="sl">08:30</div><div class="sl x">09:00</div><div class="sl">09:30</div><div class="sl">10:00</div><div class="sl x">10:30</div><div class="sl">11:00</div><div class="sl">13:30</div><div class="sl">14:00</div><div class="sl x">14:30</div></div>
+      <div class="pbtn">Continuar</div></div>
+    <div class="pscr" id="pB"><p class="pt">Sua ficha</p><p class="ps">Preencha antes de ir à academia</p>
+      <div class="ck"><span class="ckb" id="k1">✓</span>Dados pessoais</div>
+      <div class="ck"><span class="ckb" id="k2">✓</span>Anamnese e PAR-Q</div>
+      <div class="ck"><span class="ckb" id="k3">✓</span>Fotos posturais</div>
+      <div class="ck"><span class="ckb" id="k4">✓</span>Recordatório 24h</div>
+      <div class="ck"><span class="ckb" id="k5">✓</span>Autorização de uso dos dados</div>
+      <div class="pbtn" style="background:#C21F2B">Enviar e agendar</div></div>
+    <div class="pscr" id="pC"><div class="conf"><div class="big"><svg width="52" height="52" viewBox="0 0 52 52"><path d="M12 27l9 9 19-20" fill="none" stroke="#2E7D4F" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <p class="pt">Avaliação agendada</p><p class="ps" style="margin:0">sex, 2 out · 08:00<br>Academia do 15º BPM</p><div class="code">PIP-4821</div>
+      <p class="ps" style="text-align:left;background:#E7E2D7;border-radius:10px;padding:14px 16px;margin-top:6px;font-size:16px">Preparo: jejum de 4 h, sem café 12 h, sem álcool 48 h, sem treino 12 h antes.</p></div></div>
+    <div id="tap"></div>
+  </div></div>
+  <div id="pan"><h4>Agenda do avaliador</h4><div class="sub">sex, 2 out · fichas recebidas</div>
+    <div class="ar"><span class="t">07:00</span><span>Sd PM Araújo</span><span class="mk"><span>D</span><span>F</span><span>A</span><span>R</span></span></div>
+    <div class="ar"><span class="t">07:30</span><span>Cb PM Moreira<span class="al">alerta</span></span><span class="mk"><span>D</span><span>F</span><span>A</span><span class="no">R</span></span></div>
+    <div class="ar" id="newrow" style="opacity:0"><span class="t" style="color:#F29AA4">08:00</span><span>Novo agendamento</span><span class="mk"><span>D</span><span>F</span><span>A</span><span>R</span></span></div>
+    <div class="ar"><span class="t">09:00</span><span>2º Sgt PM Fontes</span><span class="mk"><span>D</span><span class="no">F</span><span>A</span><span>R</span></span></div>
+    <div class="ar"><span class="t">10:30</span><span>Sd PM Rezende</span><span class="mk"><span>D</span><span class="no">F</span><span class="no">A</span><span class="no">R</span></span></div>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="scene" id="s6">
+  <div class="abs" id="s6head"><div class="lbl">A proposta ao Comando</div><div class="h">Projeto-piloto no 15º BPM</div></div>
+  <div id="tiles">
+    <div class="tile"><div class="num" data-n="12">12</div><div class="cap">meses de execução, com avaliação final</div></div>
+    <div class="tile"><div class="num" data-n="6">6</div><div class="cap">eixos estratégicos integrados</div></div>
+    <div class="tile red"><div class="num" data-n="0">0</div><div class="cap">novos cargos: usa a estrutura existente</div></div>
+    <div class="tile"><div class="num" data-n="1">1</div><div class="cap">relatório técnico para decidir a expansão</div></div>
+  </div>
+  <div class="abs" id="s6foot">Decisões baseadas em evidências produzidas <span class="k">na própria Corporação</span>.</div>
+</div>
+
+<!-- S7 -->
+<div class="scene" id="s7">
+  <img id="s7tri" src="../assets/brasao.png" alt="">
+  <div class="abs" id="lib">Libertas quæ sera tamen</div>
+  <div class="abs" id="motto"><div class="h">“Fortalecer a performance humana para ampliar a <span class="k">capacidade operacional</span>.”</div></div>
+  <div class="abs" id="cred"><div class="a">PIPHPO · 15º BPM · 10ª RPM</div><div class="b">Proposta: Cb PM Leandro Carvalho Delavy</div><div class="c">Patos de Minas – MG · 2026</div></div>
+</div>
+
+<div id="bug"><svg width="30" height="26" viewBox="0 0 260 226"><polygon points="130,8 252,218 8,218" fill="#C21F2B"/></svg>PIPHPO · Projeto-piloto 15º BPM</div>
+<div class="vig" id="vig"></div>
+<div id="bar"></div>
+<div id="black"></div>
+</div>
+<script>
+const T=80;
+const $=id=>document.getElementById(id);
+const cl=x=>Math.min(1,Math.max(0,x));
+const E=x=>1-Math.pow(1-x,3);
+const EI=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const P=(t,a,b)=>E(cl((t-a)/(b-a)));
+function fade(el,t,a,b,c,d,dy=0){let o=P(t,a,b),y=(1-o)*dy;if(c!==undefined){const q=P(t,c,d);o*=1-q;y-=q*dy*.4}el.style.opacity=o;if(dy)el.style.transform=`translateY(${y}px)`;return o}
+// thesis words
+const TH="A capacidade operacional da Polícia Militar depende da capacidade humana do seu efetivo.";
+const hi=new Set([9,10]);
+$('thtext').innerHTML=TH.split(' ').map((w,i)=>`<span class="w${i>=8&&i<=9?' k':''}">${w}</span>`).join(' ');
+const words=[...document.querySelectorAll('#thtext .w')];
+// cycle nodes
+const NODES=['Avaliação','Planejamento','Treinamento','Monitoramento','Indicadores','Relatório ao Comando','Melhoria contínua'];
+const CX=1360,CY=540,R=300;
+const nodesEl=$('nodes');
+NODES.forEach((n,i)=>{const a=-Math.PI/2+i*2*Math.PI/NODES.length;const x=CX+R*Math.cos(a),y=CY+R*Math.sin(a);
+ const d=document.createElement('div');d.className='node'+(i===5?' cmd':'');const right=Math.cos(a)>=-0.05;
+ d.innerHTML=right?`<span class="n">${i+1}</span><span>${n}</span>`:`<span>${n}</span><span class="n">${i+1}</span>`;
+ d.style.top=(y-29)+'px';if(right){d.style.left=(x-29)+'px'}else{d.style.right=(1920-x-29)+'px'}
+ d.dataset.i=i;nodesEl.appendChild(d)});
+const nodeEls=[...nodesEl.children];
+const arc=$('arc');const CIRC=2*Math.PI*R;arc.setAttribute('stroke-dasharray',CIRC);
+$('cycc').style.left=(CX-170)+'px';$('cycc').style.top=(CY-68)+'px';
+const tiles=[...document.querySelectorAll('.tile')];
+
+
+function render(t){
+  // S1 0-4.8
+  fade($('s1'),t,0,.4,4.2,4.9);
+  {const o=P(t,.3,1.6);const c=$('crest1');c.style.opacity=o;c.style.transform=`scale(${.9+.1*o+.03*cl((t-1.6)/3)})`;}
+  fade($('s1top'),t,1.2,2.2,undefined,undefined,20);
+  fade($('s1sub'),t,2.0,3.0,undefined,undefined,20);
+  // S1b 4.8-10.5
+  fade($('s1b'),t,4.7,5.1,10,10.6);
+  fade($('thlbl'),t,4.9,5.6,undefined,undefined,16);
+  words.forEach((w,i)=>{const a=5.3+i*.22;fade(w,t,a,a+.55,undefined,undefined,26)});
+  // S2 10.5-23
+  fade($('s2'),t,10.4,10.9,22.4,23);
+  fade($('s2lbl'),t,10.8,11.5,undefined,undefined,16);
+  document.querySelectorAll('#c1 h3,#c2 h3').forEach((h,i)=>fade(h,t,11.2+i*2.6,11.9+i*2.6,undefined,undefined,20));
+  document.querySelectorAll('#c1 .item').forEach((el,i)=>fade(el,t,11.7+i*.55,12.4+i*.55,undefined,undefined,24));
+  document.querySelectorAll('#c2 .item').forEach((el,i)=>fade(el,t,14.3+i*.6,15+i*.6,undefined,undefined,24));
+  fade($('s2stmt'),t,17.8,18.5);
+  fade($('s2b'),t,19.0,19.8,undefined,undefined,20);
+  $('vig').style.opacity=1-parseFloat($('s2stmt').style.opacity||0)*(t<23?parseFloat($('s2').style.opacity||0):0);
+  // S3 23-28.5
+  fade($('s3'),t,22.9,23.3,28,28.6);
+  const b=$('brand');const bo=P(t,23.2,24.2);b.style.opacity=bo;b.style.transform=`scale(${.92+.08*bo})`;
+  $('s3line').style.width=(1100*EI(cl((t-24)/1)))+'px';
+  fade($('s3full'),t,24.4,25.3,undefined,undefined,18);
+  fade($('s3pilot'),t,25.2,26.1,undefined,undefined,18);
+  // S4 28.5-44
+  fade($('s4'),t,28.4,28.9,43.4,44);
+  const c0=29.4,step=1.55;
+  const ap=cl((t-c0)/(step*NODES.length));
+  arc.setAttribute('stroke-dashoffset',CIRC*(1-ap));
+  nodeEls.forEach((n,i)=>{const a=c0+i*step-.2;const o=P(t,a,a+.5);n.style.opacity=o;n.style.transform=`scale(${.85+.15*o})`});
+  const co=fade($('cycc'),t,40.6,41.5);
+  const orbT=Math.max(0,t-40.6);const oa=-Math.PI/2+orbT*1.1;$('orb').setAttribute('cx',500+R*Math.cos(oa));$('orb').setAttribute('cy',500+R*Math.sin(oa));$('orb').setAttribute('opacity',co);
+  // S5 44-61
+  fade($('s5'),t,43.9,44.4,60.4,61);
+  const ph=$('phone');const po=P(t,44.3,45.3);ph.style.opacity=po;ph.style.transform=`translateY(${(1-po)*60}px)`;
+  fade($('st1'),t,45,45.7,undefined,undefined,20);
+  fade($('st2'),t,49.2,49.9,undefined,undefined,20);
+  fade($('st3'),t,53.4,54.1,undefined,undefined,20);
+  fade($('st4'),t,56,56.7,undefined,undefined,20);
+  fade($('pA'),t,44.5,44.9,48.8,49.2);
+  fade($('pB'),t,48.9,49.3,52.9,53.3);
+  fade($('pC'),t,53,53.4);
+  $('sl8').className='sl'+(t>=47?' on':'');
+  const tap=$('tap');const sl=$('sl8');
+  if(t>46.6&&t<47.6){const k=(t-46.6)/1;tap.style.opacity=1-k;const s=.6+k*.9;tap.style.left=(sl.offsetLeft+sl.offsetWidth/2-32+24)+'px';tap.style.top=(sl.offsetTop+sl.offsetHeight/2-32+54)+'px';tap.style.transform=`scale(${s})`}else tap.style.opacity=0;
+  for(let i=1;i<=5;i++){$('k'+i).className='ckb'+(t>=49.8+i*.55?' on':'')}
+  const pan=$('pan');const pno=P(t,56.3,57.3);pan.style.opacity=pno;pan.style.transform=`translateX(${(1-pno)*60}px)`;
+  fade($('newrow'),t,57.6,58.3);
+  $('newrow').style.background=`rgba(208,21,47,${.18*P(t,57.6,58.3)*(1-P(t,59.2,60))})`;
+  // S6 61-70
+  fade($('s6'),t,60.9,61.4,69.4,70);
+  fade($('s6head'),t,61.2,62,undefined,undefined,20);
+  tiles.forEach((el,i)=>{const a=62+i*.45;fade(el,t,a,a+.7,undefined,undefined,40);const num=el.querySelector('.num');const n=+num.dataset.n;num.textContent=Math.round(n*P(t,a,a+1.2))});
+  fade($('s6foot'),t,65.2,66,undefined,undefined,20);
+  // S7 70-80
+  fade($('s7'),t,69.9,70.4,79,79.5);
+  fade($('s7tri'),t,70.2,70.9);
+  fade($('lib'),t,70.6,71.4);
+  fade($('motto'),t,71,72.2,undefined,undefined,30);
+  fade($('cred'),t,74,75,undefined,undefined,20);
+  // chrome
+  fade($('bug'),t,11,11.8,69.2,69.9);
+  $('bar').style.width=(1920*cl(t/T))+'px';$('bar').style.opacity=1-P(t,78.6,79.2);
+  $('black').style.opacity=P(t,79,80)+(1-P(t,0,.4));
+}
+render(0);
+window.render=render;
+</script></body></html>

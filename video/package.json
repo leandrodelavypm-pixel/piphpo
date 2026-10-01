@@ -1,0 +1,9 @@
+{
+  "name": "piphpo-video",
+  "private": true,
+  "description": "Pitch animado do PIPHPO renderizado com Playwright + ffmpeg",
+  "dependencies": {
+    "@fontsource/barlow": "^5.0.0",
+    "@fontsource/barlow-condensed": "^5.0.0"
+  }
+}

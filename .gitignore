@@ -1,0 +1,6 @@
+node_modules/
+video/out/_raw.mp4
+video/out/capa.png
+video/out/*.wav
+__pycache__/
+.DS_Store
