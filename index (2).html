@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PIPHPO · Avaliação física</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+/* Identidade (CLAUDE.md): preto #111213, cáqui #B7A076, cinza #6E7275; vermelho #C21F2B só como destaque. Barlow Condensed + Barlow. */
+:root{
+  /* mesmas cores do site (site/index.html) */
+  --preto:#111213; --caqui:#B7A076; --cinza:#6E7275; --vermelho:#C21F2B;
+  --bg:#111213; --surface:#1B1C1E; --surface-2:#222326; --line:#2C2E31;
+  --ink:#F1EEE7; --muted:#9A9D9F;
+  --accent:#B7A076; --accent-ink:#111213;
+  --khaki-ink:#CDB98F; --accent-soft:#2A261E;
+  --ok:#7FCB98; --ok-soft:#1B2A20; --warn:#E2B85C; --warn-soft:#2F2716; --bad:#F0727A; --bad-soft:#3A1C1F;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow","Segoe UI",Roboto,Arial,sans-serif;
+  color-scheme:dark;
+}
+::selection{background:var(--caqui);color:#111}
+:root{box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+html,body{margin:0}
+img{max-width:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.5;font-variant-numeric:tabular-nums}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 16px 56px}
+h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:.01em;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:700;line-height:1}
+h2{font-size:2rem;line-height:1.05}
+h3{font-size:1.3rem;line-height:1.15}
+p{margin:0}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+
+/* barra superior: sempre preta, como a viatura */
+.top{background:var(--bg);color:var(--ink);border-bottom:1px solid rgba(255,255,255,.06);padding-top:env(safe-area-inset-top,0px)}
+.top-in{max-width:1100px;margin:0 auto;padding:14px 16px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center;min-width:0}
+.brand img{width:40px;height:auto;flex:0 0 auto}
+.brand b{display:block;font-family:var(--display);font-size:1.7rem;font-weight:700;letter-spacing:.06em;line-height:1}
+.brand div > span{display:block;font-size:.84rem;color:#A9ACAD;line-height:1.3}
+.brand .proto{display:inline-block;color:var(--caqui);font:700 .7rem var(--body);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--caqui);color:var(--caqui);padding:2px 7px;border-radius:3px;margin-left:8px;vertical-align:4px}
+.seg{display:flex;border:1px solid #3A3D3F;border-radius:6px;padding:3px;gap:3px}
+.seg button{border:0;background:transparent;color:#A9ACAD;font:600 .93rem var(--body);padding:7px 13px;border-radius:4px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--caqui);color:var(--preto)}
+.stripe{height:10px;background:linear-gradient(112deg,var(--preto) 0 52%,var(--cinza) 52% 70%,var(--caqui) 70% 100%)}
+
+/* tela inicial */
+.inicio{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:start}
+.hero{display:flex;flex-direction:column;gap:16px;padding-top:6px}
+.hero .lead{font-size:1.1rem}
+.hero h1::before{content:"";display:block;width:40px;height:3px;background:var(--vermelho);margin-bottom:18px}
+.lead{max-width:60ch;color:var(--muted)}
+.need{display:flex;flex-direction:column;gap:8px;margin:4px 0 0;padding:0;list-style:none}
+.need li{display:grid;grid-template-columns:22px 1fr;gap:8px}
+.need li::before{content:"";width:12px;height:3px;background:var(--caqui);margin-top:.7em}
+.privacy{border-left:3px solid var(--caqui);padding:4px 0 4px 14px;color:var(--muted);font-size:.93rem;max-width:58ch}
+.choices{display:flex;flex-direction:column;gap:14px}
+.choice{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.choice.main{border-color:var(--caqui);box-shadow:inset 0 4px 0 var(--caqui)}
+.codebox{display:flex;gap:8px;flex-wrap:wrap}
+.codebox input{flex:1 1 160px;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+
+/* portal */
+.portal{display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px;align-items:start}
+.portal.solo{grid-template-columns:minmax(0,820px);justify-content:center}
+.portal.solo .rail{display:none}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:2px}
+.rail button{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;text-align:left;border:0;background:transparent;color:var(--ink);font:500 1rem var(--body);padding:9px 10px;border-radius:5px;cursor:pointer}
+.rail button:hover{background:var(--surface)}
+.rail button[aria-current="step"]{background:var(--surface);box-shadow:inset 3px 0 0 var(--caqui);font-weight:600}
+.dot{width:26px;height:26px;flex:0 0 26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:600 .82rem var(--body);border:1.5px solid var(--line);color:var(--muted);background:var(--surface)}
+.dot.done::after{content:"";width:6px;height:11px;border:solid var(--preto);border-width:0 2.5px 2.5px 0;transform:translateY(-1px) rotate(45deg)}
+.dot.done{background:var(--caqui);border-color:var(--caqui);color:var(--preto)}
+.railnote{margin-top:14px;padding:12px;border-radius:6px;background:var(--surface);border:1px solid var(--line);font-size:.86rem;color:var(--muted);display:flex;flex-direction:column;gap:8px}
+.railnote b{color:var(--ink)}
+.bar{height:5px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--caqui);width:0;transition:width .3s}
+.mprog{display:none}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:28px;min-width:0}
+.panel > section{display:flex;flex-direction:column;gap:22px}
+.panel > section > div:first-child{display:flex;flex-direction:column;gap:8px}
+.prep h3{margin-bottom:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+label,.lbl{font-weight:600;font-size:.94rem}
+.req::after{content:" *";color:var(--bad)}
+input[type=text],input[type=tel],input[type=date],input[type=number],input[type=time],select,textarea{
+  font:inherit;font-size:1rem;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:10px 12px;width:100%}
+textarea{min-height:76px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--caqui);outline-offset:2px}
+fieldset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+legend{float:left;width:100%;font-family:var(--display);font-size:1.3rem;font-weight:600;padding:0;margin-bottom:6px}
+legend + *{clear:both}
+.group{border-top:1px solid var(--line);padding-top:20px}
+.hint{font-size:.9rem;color:var(--muted)}
+
+.btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-top:1px solid var(--line);padding-top:20px}
+.btn{font:600 1rem var(--body);border-radius:5px;padding:11px 20px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn:hover{border-color:var(--cinza)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:#CBB78E;border-color:#CBB78E}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--khaki-ink);padding-inline:8px;text-decoration:underline;text-underline-offset:3px}
+.btn.small{padding:7px 12px;font-size:.92rem}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.err{color:var(--bad);font-size:.93rem;font-weight:600}
+
+/* agendamento */
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.day{flex:0 0 auto;min-width:74px;border:1px solid var(--line);background:var(--surface-2);border-radius:6px;padding:8px 10px;text-align:center;cursor:pointer;color:var(--ink);font:inherit}
+.day b{display:block;font-family:var(--display);font-size:1.6rem;line-height:1.05}
+.day small{display:block;font-size:.8rem;color:var(--muted)}
+.day[aria-pressed="true"]{border-color:var(--caqui);background:var(--accent-soft);box-shadow:inset 0 -3px 0 var(--caqui)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}
+.slot{font:600 1rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:5px;padding:9px 0;cursor:pointer}
+.slot:disabled{background:var(--surface-2);color:var(--muted);text-decoration:line-through;cursor:not-allowed}
+.slot[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.shift{font-size:.88rem;color:var(--muted);font-weight:600;margin:6px 0 2px}
+.prep{background:var(--surface-2);border-radius:6px;padding:18px 20px;border-left:3px solid var(--caqui)}
+.prep ul{margin:10px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:5px}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:500}
+.check input{margin-top:4px;width:18px;height:18px;accent-color:var(--caqui);flex:0 0 auto}
+
+/* fotos */
+.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
+.ph{border:1.5px dashed var(--line);border-radius:6px;aspect-ratio:3/4;max-width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden;background:var(--surface-2);cursor:pointer;text-align:center;padding:12px}
+.ph:hover{border-color:var(--caqui)}
+.ph.has{border-style:solid;border-color:var(--caqui)}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph .tag{position:absolute;left:8px;bottom:8px;background:var(--preto);color:#ECEAE4;font-size:.8rem;font-weight:600;padding:2px 8px;border-radius:3px;z-index:1}
+.ph input{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:2}
+.sil{width:46px;height:78px;color:var(--cinza)}
+
+/* sim/não */
+.yn{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.yn:last-child{border-bottom:0}
+.pill{display:flex;gap:4px}
+.pill input{position:absolute;opacity:0;width:1px;height:1px}
+.pill label{border:1px solid var(--line);border-radius:999px;padding:5px 15px;font-weight:600;font-size:.9rem;cursor:pointer;background:var(--surface-2)}
+.pill input:checked + label{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.pill input.yes:checked + label{background:var(--bad);border-color:var(--bad);color:#fff}
+.pill input:focus-visible + label{outline:2px solid var(--caqui);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{display:flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-weight:500;cursor:pointer;background:var(--surface-2)}
+.chips input{accent-color:var(--caqui)}
+.notice{background:var(--warn-soft);color:var(--ink);border-left:3px solid var(--warn);border-radius:4px;padding:12px 14px;font-size:.95rem}
+
+/* recordatório */
+.r24{width:100%;border-collapse:collapse;min-width:620px}
+.r24 th{text-align:left;font-size:.86rem;color:var(--muted);font-weight:600;padding:6px;border-bottom:1px solid var(--line)}
+.r24 td{padding:6px;vertical-align:top}
+.r24 td:first-child{width:104px}.r24 td:nth-child(2){width:160px}.r24 td:nth-child(4){width:170px}.r24 td:last-child{width:40px}
+.scroll{overflow-x:auto}
+.x{border:0;background:transparent;color:var(--muted);font-size:1.3rem;cursor:pointer;padding:6px 8px;border-radius:4px}
+.x:hover{color:var(--bad);background:var(--bad-soft)}
+
+/* revisão e ficha */
+.review{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.review > div{display:flex;justify-content:space-between;gap:8px 12px;align-items:center;padding:13px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.review > div:last-child{border-bottom:0}
+.review .what{display:flex;flex-direction:column;gap:2px;min-width:0}
+.review .what span{font-size:.88rem;color:var(--muted)}
+.review .act{display:flex;gap:10px;align-items:center}
+.st{font-size:.82rem;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.st.ok{background:var(--ok-soft);color:var(--ok)}
+.st.pend{background:var(--warn-soft);color:var(--warn)}
+.st.bad{background:var(--bad-soft);color:var(--bad)}
+.st.wait{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+.consent{background:var(--accent-soft);border-radius:6px;padding:16px 18px}
+
+/* confirmação */
+.confirm{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:28px;align-items:start}
+.confirm-main{display:flex;flex-direction:column;gap:20px}
+.code{display:inline-block;font:700 1.9rem var(--display);letter-spacing:.1em;background:var(--surface);border:1px solid var(--caqui);color:var(--caqui);padding:6px 18px;border-radius:4px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:14px;padding-bottom:18px;position:relative}
+.steps li::before{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:var(--line)}
+.steps li:last-child::before{display:none}
+.steps .n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:700 1rem var(--display);background:var(--surface);border:2px solid var(--line);color:var(--muted)}
+.steps li.now .n{background:var(--caqui);border-color:var(--caqui);color:var(--preto)}
+.steps b{display:block;font-family:var(--display);font-size:1.2rem;font-weight:600}
+.steps p{color:var(--muted)}
+.phone{background:#0B141A;border:1px solid var(--line);border-radius:14px;padding:16px 14px;display:flex;flex-direction:column;gap:10px;color:#E9EDEF}
+.phone .who{display:flex;gap:10px;align-items:center;font-weight:600;font-size:.95rem}
+.phone .who img{width:30px;height:auto;background:#fff;border-radius:50%;padding:3px}
+.bubble{background:#1F2C34;border-radius:0 10px 10px 10px;padding:10px 12px;font-size:.93rem;line-height:1.45;display:flex;flex-direction:column;gap:7px}
+.bubble a{color:#53BDEB}
+.bubble small{align-self:flex-end;color:#8696A0;font-size:.75rem}
+.phone-cap{font-size:.86rem;color:var(--muted);margin-top:8px}
+
+/* painel do avaliador */
+.admin{display:flex;flex-direction:column;gap:20px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;box-shadow:inset 0 3px 0 var(--caqui)}
+.kpi b{display:block;font-family:var(--display);font-size:2.3rem;line-height:1}
+.kpi span{font-size:.9rem;color:var(--muted)}
+.agenda{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.row{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 16px;border:0;border-bottom:1px solid var(--line);cursor:pointer;background:transparent;width:100%;text-align:left;color:var(--ink);font:inherit}
+.row:last-child{border-bottom:0}
+.row:hover{background:var(--surface-2)}
+.row[aria-current="true"]{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--caqui)}
+.row .t{font:700 1.05rem var(--display)}
+.row .n{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .sub{display:block;font-size:.86rem;color:var(--muted)}
+.marks{display:flex;gap:4px}
+.mk{width:24px;height:24px;border-radius:4px;display:grid;place-items:center;font:700 .78rem var(--body)}
+.mk.ok{background:var(--ok-soft);color:var(--ok)}
+.mk.no{background:var(--surface-2);color:var(--muted)}
+.flag{display:inline-block;margin-left:6px;font-size:.74rem;font-weight:700;background:var(--bad-soft);color:var(--bad);padding:1px 7px;border-radius:999px;vertical-align:1px}
+.flag.new{background:var(--accent-soft);color:var(--khaki-ink)}
+.free{padding:10px 16px;border-bottom:1px solid var(--line);font-size:.92rem;color:var(--muted);display:grid;grid-template-columns:58px 1fr;gap:12px}
+.free:last-child{border-bottom:0}
+.detail{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:18px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px)}
+.alerts{display:flex;flex-direction:column;gap:6px}
+.alert{background:var(--bad-soft);color:var(--bad);border-radius:4px;padding:8px 12px;font-weight:600;font-size:.93rem}
+.alert.w{background:var(--warn-soft);color:var(--warn)}
+.alert.ok{background:var(--ok-soft);color:var(--ok)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:.95rem;margin:0}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;font-weight:500;min-width:0;overflow-wrap:anywhere}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.thumb{aspect-ratio:3/4;border-radius:4px;background:var(--surface-2);display:grid;place-items:center;font-size:.8rem;color:var(--muted);overflow:hidden;text-align:center;padding:4px}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem}
+.mini td{padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.mini td:first-child{font-weight:600;color:var(--muted);width:56px}
+.sec-h{font-family:var(--display);font-size:1.1rem;font-weight:600;margin-bottom:6px}
+
+@media (max-width:820px){
+  .wrap{padding-top:20px}
+  .inicio,.confirm{grid-template-columns:1fr}
+  .portal{grid-template-columns:1fr}
+  .rail{display:none}
+  .mprog{display:flex;flex-direction:column;gap:6px;font-size:.9rem;color:var(--muted)}
+  .panel{padding:20px}
+  .r24{min-width:0}
+  .r24 thead{display:none}
+  .r24,.r24 tbody{display:block}
+  .r24 tr{display:grid;grid-template-columns:118px minmax(0,1fr) auto;gap:8px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .r24 td{padding:0;width:auto!important}
+  .r24 td:nth-child(2){grid-column:2/4}
+  .r24 td:nth-child(3){grid-column:1/-1}
+  .r24 td:nth-child(4){grid-column:1/3}
+  .agenda{grid-template-columns:1fr}
+  .detail{position:static}
+  .brand div > span{display:none}
+  h2{font-size:1.75rem}
+}
+@media (max-width:420px){
+  .top-in{padding-block:10px}
+  .seg button{padding:6px 9px;font-size:.86rem}
+  .brand img{width:34px}
+  .brand b{font-size:1.45rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <img src="../site/assets/brasao.png" alt="Brasão da PMMG">
+      <div><b>PIPHPO<span class="proto">Protótipo</span></b><span>Avaliação física · Guarnição de Patos de Minas</span></div>
+    </div>
+    <div class="seg" role="group" aria-label="Trocar visão">
+      <button type="button" id="v-mil" aria-pressed="true">Militar</button>
+      <button type="button" id="v-adm" aria-pressed="false">Avaliador</button>
+    </div>
+  </div>
+  <div class="stripe" aria-hidden="true"></div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ PORTAL DO MILITAR ============ -->
+  <div id="view-mil">
+
+    <!-- Tela inicial -->
+    <div id="scr-inicio" class="inicio">
+      <div class="hero">
+        <h1>Avaliação física do PIPHPO</h1>
+        <p class="lead">Agende sua bioimpedância e adiante a ficha pelo celular. Quando você chegar à academia, o avaliador já sabe o que precisa, e a avaliação leva cerca de 30 minutos.</p>
+        <div>
+          <p style="font-weight:600">Para agendar, tenha em mãos:</p>
+          <ul class="need">
+            <li>Seu número PM e o WhatsApp.</li>
+            <li>A sua escala, para escolher um horário que não caia logo após um plantão noturno.</li>
+            <li>Alguém para tirar 4 fotos de corpo inteiro. Se preferir, as fotos são feitas no dia.</li>
+          </ul>
+        </div>
+        <p class="privacy">Suas respostas de saúde e suas fotos são vistas só pelo avaliador. Elas não são usadas para escala, promoção ou avaliação de desempenho.</p>
+      </div>
+      <div class="choices">
+        <div class="choice main">
+          <h3>Primeira vez</h3>
+          <p class="muted">Seus dados, o horário, as fotos e as perguntas de saúde. Leva uns 10 minutos, e só os dados e o horário são obrigatórios agora.</p>
+          <div><button type="button" class="btn primary" id="start">Agendar minha avaliação</button></div>
+        </div>
+        <div class="choice">
+          <h3>Já agendei</h3>
+          <p class="muted">Use o código que você recebeu para completar o que ficou pendente, remarcar ou preencher o recordatório alimentar.</p>
+          <div class="field">
+            <label for="code-in">Código do agendamento</label>
+            <div class="codebox"><input type="text" id="code-in" placeholder="PIP-0000" autocomplete="off" spellcheck="false"><button type="button" class="btn" id="code-go">Abrir minha ficha</button></div>
+          </div>
+          <p class="err" id="err-code" hidden></p>
+          <p class="hint">No protótipo, teste com <b>PIP-2741</b>. Na versão final, o acesso é confirmado por um código enviado ao seu WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulário (novo agendamento e edição de partes da ficha) -->
+    <div class="portal" id="portal" hidden>
+      <nav class="rail" id="rail" aria-label="Etapas"></nav>
+      <form class="panel" id="f" novalidate>
+        <div class="mprog" id="mprog"></div>
+
+        <section data-step="0">
+          <div><h2>Seus dados</h2><p class="lead">Preencha uma vez. Os campos com * são obrigatórios.</p></div>
+          <div class="grid">
+            <div class="field"><label class="req" for="nome">Nome completo</label><input type="text" id="nome" name="nome" autocomplete="name"></div>
+            <div class="field"><label class="req" for="numero">Número PM</label><input type="text" id="numero" name="numero" inputmode="numeric" placeholder="000.000-0"></div>
+            <div class="field"><label class="req" for="grad">Posto / graduação</label>
+              <select id="grad" name="grad"><option value="">Selecione</option><option>Sd PM</option><option>Cb PM</option><option>3º Sgt PM</option><option>2º Sgt PM</option><option>1º Sgt PM</option><option>Subten PM</option><option>Ten PM</option><option>Cap PM</option><option>Maj PM</option></select></div>
+            <div class="field"><label for="cia">Companhia / fração</label><input type="text" id="cia" name="cia" placeholder="Ex.: 47ª Cia"></div>
+            <div class="field"><label class="req" for="nasc">Data de nascimento</label><input type="date" id="nasc" name="nasc"></div>
+            <div class="field"><label class="req" for="sexo">Sexo</label><select id="sexo" name="sexo"><option value="">Selecione</option><option>Masculino</option><option>Feminino</option></select></div>
+            <div class="field"><label class="req" for="tel">WhatsApp</label><input type="tel" id="tel" name="tel" placeholder="(34) 9 0000-0000"><span class="hint">Para a confirmação e o lembrete da véspera.</span></div>
+            <div class="field"><label for="altura">Altura (cm)</label><input type="number" id="altura" name="altura" min="140" max="220" placeholder="175"></div>
+          </div>
+          <div class="grid">
+            <div class="field"><label for="funcao">Função atual</label>
+              <select id="funcao" name="funcao"><option value="">Selecione</option><option>Patrulhamento em viatura</option><option>Patrulhamento a pé</option><option>Motopatrulhamento</option><option>Tático / ROTAM</option><option>Administrativo</option><option>Outra</option></select></div>
+            <div class="field"><label for="escala">Escala</label>
+              <select id="escala" name="escala"><option value="">Selecione</option><option>12x24 / 12x48</option><option>24x72</option><option>Expediente</option><option>Outra</option></select></div>
+          </div>
+          <p class="err" id="err0" hidden></p>
+        </section>
+
+        <section data-step="1" hidden>
+          <div><h2>Agendar bioimpedância</h2><p class="lead">Escolha o dia e o horário. Cada avaliação leva cerca de 30 minutos: bioimpedância, medidas e uma conversa sobre a ficha.</p></div>
+          <div class="field"><span class="lbl">Dia</span><div class="days" id="days"></div></div>
+          <div class="field"><span class="lbl">Horário</span><div id="slots"></div></div>
+          <div class="prep">
+            <h3>Preparo para a bioimpedância</h3>
+            <p class="hint">Sem o preparo, o resultado sai distorcido e a avaliação precisa ser remarcada. Você recebe este lembrete de novo na véspera.</p>
+            <ul>
+              <li>Jejum de 4 horas de comida. Água pode, com moderação.</li>
+              <li>Sem café, energético ou chá preto nas 12 horas anteriores.</li>
+              <li>Sem bebida alcoólica nas 48 horas anteriores.</li>
+              <li>Não treinar nas 12 horas anteriores.</li>
+              <li>Urinar até 30 minutos antes da avaliação.</li>
+              <li>Tirar relógio, anéis, correntes e outros metais na hora.</li>
+              <li>Evite marcar logo após um plantão noturno.</li>
+            </ul>
+          </div>
+          <label class="check"><input type="checkbox" id="prepok" name="prepok"> Li as orientações e vou seguir o preparo.</label>
+          <p class="err" id="err1" hidden></p>
+        </section>
+
+        <section data-step="2" hidden>
+          <div><h2>Fotos posturais</h2><p class="lead">Quatro fotos de corpo inteiro, para a avaliação postural e para comparar sua evolução ao longo do programa. Você pode pular esta etapa e enviar depois, ou fazer as fotos no dia.</p></div>
+          <div class="photos">
+            <label class="ph" id="ph-frente"><input type="file" accept="image/*" data-pos="frente" aria-label="Foto de frente">
+              <svg class="sil" viewBox="0 0 46 78" aria-hidden="true"><circle cx="23" cy="8" r="7" fill="currentColor"/><rect x="12" y="17" width="22" height="30" rx="6" fill="currentColor"/><rect x="13" y="46" width="8" height="30" rx="3" fill="currentColor"/><rect x="25" y="46" width="8" height="30" rx="3" fill="currentColor"/><rect x="3" y="19" width="7" height="26" rx="3" fill="currentColor"/><rect x="36" y="19" width="7" height="26" rx="3" fill="currentColor"/></svg>
+              <b>Frente</b><span class="hint">Toque para enviar</span></label>
+            <label class="ph" id="ph-perfil_d"><input type="file" accept="image/*" data-pos="perfil_d" aria-label="Foto de perfil direito">
+              <svg class="sil" viewBox="0 0 46 78" aria-hidden="true"><circle cx="24" cy="8" r="7" fill="currentColor"/><rect x="16" y="17" width="15" height="30" rx="6" fill="currentColor"/><rect x="18" y="46" width="9" height="30" rx="3" fill="currentColor"/><rect x="20" y="19" width="7" height="26" rx="3" fill="currentColor" opacity=".6"/></svg>
+              <b>Perfil direito</b><span class="hint">Toque para enviar</span></label>
+            <label class="ph" id="ph-perfil_e"><input type="file" accept="image/*" data-pos="perfil_e" aria-label="Foto de perfil esquerdo">
+              <svg class="sil" viewBox="0 0 46 78" aria-hidden="true"><circle cx="22" cy="8" r="7" fill="currentColor"/><rect x="15" y="17" width="15" height="30" rx="6" fill="currentColor"/><rect x="19" y="46" width="9" height="30" rx="3" fill="currentColor"/><rect x="19" y="19" width="7" height="26" rx="3" fill="currentColor" opacity=".6"/></svg>
+              <b>Perfil esquerdo</b><span class="hint">Toque para enviar</span></label>
+            <label class="ph" id="ph-costas"><input type="file" accept="image/*" data-pos="costas" aria-label="Foto de costas">
+              <svg class="sil" viewBox="0 0 46 78" aria-hidden="true"><circle cx="23" cy="8" r="7" fill="currentColor"/><rect x="12" y="17" width="22" height="30" rx="6" fill="currentColor"/><rect x="13" y="46" width="8" height="30" rx="3" fill="currentColor"/><rect x="25" y="46" width="8" height="30" rx="3" fill="currentColor"/><rect x="3" y="19" width="7" height="26" rx="3" fill="currentColor"/><rect x="36" y="19" width="7" height="26" rx="3" fill="currentColor"/></svg>
+              <b>Costas</b><span class="hint">Toque para enviar</span></label>
+          </div>
+          <div class="prep">
+            <h3>Como tirar as fotos</h3>
+            <ul>
+              <li>Roupa: short e, para mulheres, top. Descalço.</li>
+              <li>Parede lisa e clara ao fundo, boa iluminação.</li>
+              <li>Quem fotografa fica a 2–3 metros, com o celular na altura do umbigo.</li>
+              <li>Postura natural, braços soltos ao lado do corpo, olhando para frente.</li>
+            </ul>
+          </div>
+          <p class="hint">As fotos ficam visíveis somente para o avaliador responsável.</p>
+        </section>
+
+        <section data-step="3" hidden>
+          <div><h2>Saúde e rotina</h2><p class="lead">A anamnese. Responda com sinceridade: as respostas definem o que é seguro no seu treino. Se preferir, deixe para depois e complete com o seu código.</p></div>
+
+          <fieldset>
+            <legend>Prontidão para atividade física (PAR-Q)</legend>
+            <div id="parq"></div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Bioimpedância</legend>
+            <div id="bia"></div>
+          </fieldset>
+
+          <div class="notice" id="aviso" hidden></div>
+
+          <fieldset class="group">
+            <legend>Histórico de saúde</legend>
+            <span class="lbl">Tem diagnóstico de alguma destas condições?</span>
+            <div class="chips" id="cond"></div>
+            <div class="grid">
+              <div class="field"><label for="meds">Medicamentos de uso contínuo</label><textarea id="meds" name="meds" placeholder="Nome e dose, ou 'nenhum'"></textarea></div>
+              <div class="field"><label for="lesoes">Lesões ou cirurgias (últimos 5 anos)</label><textarea id="lesoes" name="lesoes" placeholder="Ex.: entorse no tornozelo esquerdo em 2024"></textarea></div>
+            </div>
+            <div class="field"><label for="dorserv">Sente dor ligada ao serviço? (colete, cinto de guarnição, tempo em viatura)</label><input type="text" id="dorserv" name="dorserv" placeholder="Ex.: lombar no fim do turno"></div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Rotina</legend>
+            <div class="grid">
+              <div class="field"><label for="ativ">Atividade física hoje</label><select id="ativ" name="ativ"><option value="">Selecione</option><option>Não pratico</option><option>1–2 vezes por semana</option><option>3–4 vezes por semana</option><option>5 ou mais vezes por semana</option></select></div>
+              <div class="field"><label for="tipoativ">Qual atividade?</label><input type="text" id="tipoativ" name="tipoativ" placeholder="Musculação, corrida, futebol…"></div>
+              <div class="field"><label for="sono">Horas de sono por noite (média)</label><input type="number" id="sono" name="sono" min="2" max="12" step=".5" placeholder="6"></div>
+              <div class="field"><label for="fumo">Tabagismo</label><select id="fumo" name="fumo"><option value="">Selecione</option><option>Nunca fumei</option><option>Ex-fumante</option><option>Fumo</option></select></div>
+              <div class="field"><label for="alcool">Bebida alcoólica</label><select id="alcool" name="alcool"><option value="">Selecione</option><option>Não bebo</option><option>Ocasionalmente</option><option>Toda semana</option><option>Quase todo dia</option></select></div>
+              <div class="field"><label for="agua">Água por dia (litros)</label><input type="number" id="agua" name="agua" min="0" max="8" step=".5" placeholder="2"></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Objetivo</legend>
+            <div class="grid">
+              <div class="field"><label for="obj">Objetivo principal</label><select id="obj" name="obj"><option value="">Selecione</option><option>Reduzir gordura corporal</option><option>Ganhar massa muscular</option><option>Melhorar condicionamento / TAF</option><option>Reduzir dores</option><option>Saúde e qualidade de vida</option></select></div>
+              <div class="field"><label for="obs">Algo mais que o avaliador deve saber?</label><input type="text" id="obs" name="obs"></div>
+            </div>
+          </fieldset>
+          <p class="err" id="err3" hidden></p>
+        </section>
+
+        <section data-step="4" hidden>
+          <div><h2>Revisar e enviar</h2><p class="lead">Dados e horário são obrigatórios. O que ficar pendente você completa depois com o código, até a véspera.</p></div>
+          <div class="review" id="review"></div>
+          <div class="consent">
+            <label class="check"><input type="checkbox" id="lgpd" name="lgpd"> <span>Autorizo o uso dos meus dados de saúde, respostas e fotos <b>somente</b> para a avaliação física do PIPHPO. O acesso é restrito ao avaliador responsável, as informações não serão usadas para escala, promoção ou avaliação de desempenho, e posso pedir a exclusão a qualquer momento.</span></label>
+          </div>
+          <p class="err" id="err4" hidden></p>
+        </section>
+
+        <section data-step="r24" hidden>
+          <div><h2>Recordatório alimentar</h2><p class="lead" id="r24-lead"></p></div>
+          <div class="grid">
+            <div class="field"><label class="req" for="dia-tipo">Nesse dia você estava</label><select id="dia-tipo" name="diatipo"><option value="">Selecione</option><option>De serviço (turno diurno)</option><option>De serviço (turno noturno)</option><option>De folga</option><option>Em expediente administrativo</option></select></div>
+            <div class="field"><label for="dia-normal">Foi um dia normal de alimentação?</label><select id="dia-normal" name="dianormal"><option value="">Selecione</option><option>Sim, como costumo comer</option><option>Não, comi diferente do habitual</option></select></div>
+          </div>
+          <div class="scroll">
+            <table class="r24">
+              <thead><tr><th>Horário</th><th>Refeição</th><th>Alimento ou bebida</th><th>Quantidade</th><th><span hidden>Remover</span></th></tr></thead>
+              <tbody id="r24body"></tbody>
+            </table>
+          </div>
+          <div><button type="button" class="btn" id="addrow">+ Adicionar item</button></div>
+          <p class="hint">Use medidas caseiras: colher de sopa, concha, copo americano, unidade, fatia. Não esqueça café com açúcar, refrigerante, lanche na viatura, balas e o que comeu de madrugada no serviço.</p>
+          <p class="err" id="errr24" hidden></p>
+        </section>
+
+        <div class="btns" id="nav">
+          <button type="button" class="btn" id="prev">Voltar</button>
+          <button type="button" class="btn primary" id="next">Continuar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Confirmação -->
+    <div id="scr-done" class="confirm" hidden>
+      <div class="confirm-main">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <h2>Avaliação agendada</h2>
+          <p class="lead" id="done-when"></p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+          <span class="lbl">Seu código</span>
+          <span class="code" id="done-code"></span>
+          <p class="hint">Guarde o código. Ele abre a sua ficha para completar o que falta e é apresentado na academia.</p>
+        </div>
+        <ol class="steps" id="done-steps"></ol>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button type="button" class="btn primary" id="done-ficha">Abrir minha ficha</button>
+          <button type="button" class="btn" id="goadm">Ver no painel do avaliador</button>
+          <button type="button" class="btn ghost" id="again">Novo agendamento</button>
+        </div>
+      </div>
+      <aside>
+        <div class="phone" id="phone"></div>
+        <p class="phone-cap">Mensagem que o militar recebe na véspera. No protótipo, nada é enviado.</p>
+      </aside>
+    </div>
+
+    <!-- Minha ficha (volta com o código) -->
+    <div id="scr-ficha" hidden>
+      <div style="display:flex;flex-direction:column;gap:22px;max-width:820px;margin:0 auto">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <p class="muted" id="ficha-code"></p>
+          <h2 id="ficha-nome"></h2>
+          <p class="lead" id="ficha-when"></p>
+        </div>
+        <div class="review" id="ficha-list"></div>
+        <p class="hint">Dá para completar e remarcar até a véspera. Para cancelar a avaliação ou pedir a exclusão dos seus dados, fale com o avaliador.</p>
+        <div><button type="button" class="btn" id="ficha-sair">Sair</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PAINEL DO AVALIADOR ============ -->
+  <div id="view-adm" hidden>
+    <div class="admin">
+      <div><h2>Agenda de avaliações</h2><p class="muted">Horários marcados e o que cada militar já preencheu. Os registros são exemplos com nomes fictícios.</p></div>
+      <div class="days" id="adm-days"></div>
+      <div class="kpis" id="kpis"></div>
+      <div class="agenda">
+        <div class="list" id="adm-list"></div>
+        <aside class="detail" id="adm-detail"></aside>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const STEPS=['Seus dados','Agendamento','Fotos posturais','Saúde e rotina','Revisar e enviar'];
+const WD=['dom','seg','ter','qua','qui','sex','sáb'];
+const WDL=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+const MES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const MANHA=['07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00'];
+const TARDE=['13:30','14:00','14:30','15:00','15:30','16:00'];
+const PARQ=[
+ 'Algum médico já disse que você tem problema de coração e só deve fazer atividade física com supervisão?',
+ 'Você sente dor no peito quando faz atividade física?',
+ 'No último mês, sentiu dor no peito sem estar fazendo atividade física?',
+ 'Você perde o equilíbrio por tontura ou já perdeu a consciência?',
+ 'Tem algum problema ósseo ou articular que pode piorar com atividade física?',
+ 'Toma remédio para pressão arterial ou para o coração?',
+ 'Sabe de algum outro motivo para não fazer atividade física?'];
+const BIA=[
+ ['marcapasso','Usa marcapasso, desfibrilador ou outro dispositivo eletrônico implantado?'],
+ ['metal','Tem placa, pino, prótese ou outro implante metálico?'],
+ ['gest','Está gestante ou há possibilidade de gestação?']];
+const COND=['Hipertensão','Diabetes','Colesterol alto','Asma','Problema de coluna','Lesão articular','Tireoide','Outra'];
+// (ícone de concluído agora é feito em CSS)
+const _CHK='<svg width="13" height="13" viewBox="0 0 13 13" aria-label="pronto"><path d="M2 7l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const PHOTO_KEYS=['frente','perfil_d','perfil_e','costas'];
+const ANAM_TEXT=['meds','lesoes','dorserv','ativ','tipoativ','sono','fumo','alcool','agua','obj','obs'];
+
+// ---- datas
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function parse(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12)}
+function fmt(s){const dt=parse(s);return WD[dt.getDay()]+', '+dt.getDate()+' '+MES[dt.getMonth()]}
+function fmtLong(s){const dt=parse(s);return WDL[dt.getDay()]+', '+dt.getDate()+' de '+MES[dt.getMonth()]}
+function vespera(s){const dt=parse(s);dt.setDate(dt.getDate()-1);return iso(dt)}
+const HOJE=iso(new Date());
+const days=[];{const d=new Date();d.setHours(12);while(days.length<8){d.setDate(d.getDate()+1);if(d.getDay()>0&&d.getDay()<6)days.push(iso(d))}}
+
+// ---- dados de exemplo (nomes fictícios)
+const R24EX=[['06:30','Café da manhã','Pão francês com manteiga','2 unidades'],['06:30','Café da manhã','Café com açúcar','1 copo americano'],['12:00','Almoço','Arroz, feijão, bife acebolado, salada','1 prato raso'],['16:00','Lanche da tarde','Salgado frito na padaria','1 unidade'],['16:00','Lanche da tarde','Refrigerante','1 lata'],['20:30','Jantar','Macarrão com frango','2 conchas']];
+function ex(o){return Object.assign({ex:true,photos:{},r24:[],parq:Array(7).fill('nao'),bia:{marcapasso:'nao',metal:'nao',gest:'nao'},cond:[],done:{dados:true,agenda:true,fotos:false,anamnese:false,r24:false}},o)}
+const bookings=[
+ ex({code:'PIP-3310',date:days[0],time:'07:00',nome:'Rafael Araújo',grad:'Sd PM',numero:'171.204-3',cia:'47ª Cia',idade:27,sexo:'Masculino',funcao:'Patrulhamento em viatura',escala:'12x24 / 12x48',obj:'Ganhar massa muscular',ativ:'3–4 vezes por semana',sono:6,done:{dados:true,agenda:true,fotos:true,anamnese:true,r24:true},r24:R24EX,diatipo:'De folga',fotosEx:true}),
+ ex({code:'PIP-5872',date:days[0],time:'07:30',nome:'Tatiane Moreira',grad:'Cb PM',numero:'158.332-1',cia:'48ª Cia',idade:34,sexo:'Feminino',funcao:'Motopatrulhamento',escala:'12x24 / 12x48',obj:'Reduzir dores',ativ:'1–2 vezes por semana',sono:5.5,parq:['nao','nao','nao','nao','sim','nao','nao'],lesoes:'Condromalácia no joelho direito',dorserv:'Lombar e joelho após turno na moto',done:{dados:true,agenda:true,fotos:true,anamnese:true,r24:false},fotosEx:true}),
+ ex({code:'PIP-4096',date:days[0],time:'08:30',nome:'Lucas Fontes',grad:'2º Sgt PM',numero:'139.870-5',cia:'47ª Cia',idade:43,sexo:'Masculino',funcao:'Administrativo',escala:'Expediente',obj:'Reduzir gordura corporal',ativ:'Não pratico',sono:6,parq:['nao','nao','nao','nao','nao','sim','nao'],cond:['Hipertensão','Colesterol alto'],meds:'Losartana 50 mg',done:{dados:true,agenda:true,fotos:false,anamnese:true,r24:true},r24:R24EX.slice(0,4),diatipo:'Em expediente administrativo'}),
+ ex({code:'PIP-1508',date:days[0],time:'09:30',nome:'Carla Rezende',grad:'Sd PM',numero:'176.045-8',cia:'49ª Cia',idade:25,sexo:'Feminino',funcao:'Patrulhamento a pé',escala:'12x24 / 12x48'}),
+ ex({code:'PIP-6624',date:days[0],time:'14:00',nome:'João Batista',grad:'Cb PM',numero:'161.118-0',cia:'Pel Tático',idade:31,sexo:'Masculino',funcao:'Tático / ROTAM',escala:'24x72',obj:'Melhorar condicionamento / TAF',ativ:'5 ou mais vezes por semana',sono:7,bia:{marcapasso:'nao',metal:'sim',gest:'nao'},lesoes:'Placa no rádio esquerdo (2022)',done:{dados:true,agenda:true,fotos:true,anamnese:true,r24:true},r24:R24EX,diatipo:'De serviço (turno diurno)',fotosEx:true}),
+ ex({code:'PIP-7735',date:days[1],time:'07:00',nome:'Ana Queiroz',grad:'Ten PM',numero:'150.901-2',cia:'Estado-Maior',idade:38,sexo:'Feminino',funcao:'Administrativo',escala:'Expediente',obj:'Saúde e qualidade de vida',ativ:'1–2 vezes por semana',sono:7,done:{dados:true,agenda:true,fotos:false,anamnese:true,r24:false}}),
+ ex({code:'PIP-2741',date:days[1],time:'08:00',nome:'Marcos Vieira',grad:'Sd PM',numero:'174.556-9',cia:'48ª Cia',idade:29,sexo:'Masculino',tel:'(34) 9 0000-0000',funcao:'Patrulhamento em viatura',escala:'12x24 / 12x48',done:{dados:true,agenda:true,fotos:true,anamnese:false,r24:false},fotosEx:true}),
+];
+
+// ---- estado
+let mode='novo', step=0, cur=null, selDay=days[0], selTime=null, photos={}, simVespera=false, admDay=days[0], admSel=null;
+const f=$('#f');
+const released=b=>simVespera||HOJE>=vespera(b.date);
+
+// ---- telas
+function screen(name){
+  $('#scr-inicio').hidden=name!=='inicio';
+  $('#portal').hidden=name!=='portal';
+  $('#scr-done').hidden=name!=='done';
+  $('#scr-ficha').hidden=name!=='ficha';
+  window.scrollTo(0,0);
+}
+
+// ---- trilho e progresso
+function renderRail(){
+  const st=status(), keys=['dados','agenda','fotos','anamnese'];
+  const n=keys.filter(k=>st[k]).length;
+  $('#rail').innerHTML=STEPS.map((s,i)=>{const ok=i<4&&st[keys[i]];return `<button type="button" data-go="${i}" ${i===step?'aria-current="step"':''}><span class="dot ${ok?'done':''}">${ok?'<span class="sr">pronto</span>':i+1}</span>${s}</button>`}).join('')+
+   `<div class="railnote"><span><b>${n} de 4</b> partes prontas</span><div class="bar"><i style="width:${n*25}%"></i></div><p>O recordatório alimentar é liberado na véspera, pelo WhatsApp.</p><p>No protótipo nada é salvo.</p></div>`;
+  $$('#rail [data-go]').forEach(b=>b.onclick=()=>{if(+b.dataset.go>1&&!st.dados){go(0);showErr(0,'Preencha seus dados primeiro.');return}go(+b.dataset.go)});
+  $('#mprog').innerHTML=mode==='novo'?`<span>Etapa ${step+1} de 5</span><div class="bar"><i style="width:${(step+1)*20}%"></i></div>`:'';
+}
+function val(id){const e=document.getElementById(id);return e?e.value.trim():''}
+function setVal(id,v){const e=document.getElementById(id);if(e)e.value=v??''}
+function pick(n){const c=f.querySelector(`[name="${n}"]:checked`);return c?c.value:''}
+function status(){
+  const dados=['nome','numero','grad','nasc','sexo','tel'].every(val);
+  const agenda=!!selTime&&$('#prepok').checked;
+  const fotos=PHOTO_KEYS.every(k=>photos[k]);
+  const anamnese=PARQ.every((_,i)=>pick('parq'+i))&&BIA.every(([k])=>pick('bia_'+k))&&!!val('obj');
+  const r24=r24rows().length>=4&&!!val('dia-tipo');
+  return {dados,agenda,fotos,anamnese,r24};
+}
+
+// ---- navegação entre etapas
+function go(i){
+  step=i;
+  $$('#f > section').forEach(s=>s.hidden=s.dataset.step!==String(i));
+  $('#portal').classList.toggle('solo',mode!=='novo');
+  if(mode==='novo'){
+    $('#prev').textContent='Voltar';
+    $('#next').textContent=i===4?'Enviar e agendar':(i===2&&!status().fotos?'Pular por agora':'Continuar');
+  }else{
+    $('#prev').textContent='Voltar para minha ficha';
+    $('#next').textContent=i==='r24'?'Enviar recordatório':(i===1?'Confirmar novo horário':'Salvar');
+  }
+  if(i===1)renderSlots();
+  if(i===4)renderReview();
+  if(i==='r24')$('#r24-lead').textContent=r24Lead(cur);
+  renderRail();
+  window.scrollTo(0,0);
+}
+function showErr(i,msg){const e=$('#err'+i);if(!e)return;e.textContent=msg||'';e.hidden=!msg}
+$('#prev').onclick=()=>{
+  if(mode==='ficha'){openFicha(cur);return}
+  if(step===0){screen('inicio');return}
+  go(step-1);
+};
+$('#next').onclick=()=>{
+  if(mode==='ficha'){saveStep();return}
+  const st=status();
+  if(step===0&&!st.dados){showErr(0,'Preencha os campos marcados com * para continuar.');return}
+  if(step===1&&!selTime){showErr(1,'Escolha um horário.');return}
+  if(step===1&&!$('#prepok').checked){showErr(1,'Confirme que leu as orientações de preparo.');return}
+  if(step===4){submit();return}
+  [0,1,3].forEach(i=>showErr(i,''));
+  go(step+1);
+};
+
+// ---- agendamento
+function taken(d,t,except){return bookings.some(b=>b!==except&&b.date===d&&b.time===t)}
+function renderDays(el,curDay,onPick,count){
+  el.innerHTML=days.map(d=>{const dt=parse(d);
+    const c=count?`<small>${bookings.filter(b=>b.date===d).length} marc.</small>`:`<small>${MES[dt.getMonth()]}</small>`;
+    return `<button type="button" class="day" data-d="${d}" aria-pressed="${d===curDay}"><small>${WD[dt.getDay()]}</small><b>${dt.getDate()}</b>${c}</button>`}).join('');
+  el.querySelectorAll('.day').forEach(b=>b.onclick=()=>onPick(b.dataset.d));
+}
+function renderSlots(){
+  renderDays($('#days'),selDay,d=>{selDay=d;if(selTime&&taken(d,selTime,cur))selTime=null;renderSlots()});
+  const blk=(label,arr)=>`<p class="shift">${label}</p><div class="slots">${arr.map(t=>{const tk=taken(selDay,t,cur);const on=selTime===t&&!tk;return `<button type="button" class="slot" data-t="${t}" ${tk?'disabled aria-label="'+t+' ocupado"':''} aria-pressed="${on}">${t}</button>`}).join('')}</div>`;
+  $('#slots').innerHTML=blk('Manhã',MANHA)+blk('Tarde',TARDE);
+  $$('#slots .slot').forEach(b=>b.onclick=()=>{selTime=b.dataset.t;showErr(1,'');renderSlots();renderRail()});
+}
+$('#prepok').onchange=renderRail;
+
+// ---- fotos
+$$('.ph input').forEach(inp=>inp.onchange=()=>{
+  const file=inp.files&&inp.files[0];if(!file)return;
+  const r=new FileReader();r.onload=()=>{photos[inp.dataset.pos]=r.result;paintPhoto(inp.dataset.pos);renderRail();if(mode==='novo'&&step===2)go(2)};r.readAsDataURL(file);
+});
+function paintPhoto(pos){
+  const box=$('#ph-'+pos);box.classList.add('has');
+  let img=box.querySelector('img');if(!img){img=document.createElement('img');img.alt='Foto '+pos;box.appendChild(img)}
+  img.src=photos[pos];
+  if(!box.querySelector('.tag')){const t=document.createElement('span');t.className='tag';t.textContent='Enviada · trocar';box.appendChild(t)}
+}
+function clearPhotos(){$$('.ph').forEach(p=>{p.classList.remove('has');p.querySelectorAll('img,.tag').forEach(x=>x.remove())})}
+
+// ---- anamnese
+function yn(name,q){return `<div class="yn"><p>${q}</p><div class="pill"><input type="radio" id="${name}-n" name="${name}" value="nao"><label for="${name}-n">Não</label><input class="yes" type="radio" id="${name}-s" name="${name}" value="sim"><label for="${name}-s">Sim</label></div></div>`}
+$('#parq').innerHTML=PARQ.map((q,i)=>yn('parq'+i,(i+1)+'. '+q)).join('');
+$('#bia').innerHTML=BIA.map(([k,q])=>yn('bia_'+k,q)).join('');
+$('#cond').innerHTML=COND.map((c,i)=>`<label><input type="checkbox" name="cond" value="${c}" id="cond${i}">${c}</label>`).join('');
+function renderAviso(){
+  const parqSim=PARQ.some((_,i)=>pick('parq'+i)==='sim');
+  const biaNao=pick('bia_marcapasso')==='sim'||pick('bia_gest')==='sim';
+  const msgs=[];
+  if(parqSim)msgs.push('Você marcou “sim” no PAR-Q. Pode seguir com o agendamento: o avaliador conversa com você antes de qualquer teste, e pode ser preciso uma liberação médica para treinar.');
+  if(biaNao)msgs.push('Com marcapasso ou gestação, a bioimpedância não é feita. As outras medidas e a conversa com o avaliador continuam normalmente.');
+  $('#aviso').innerHTML=msgs.map(m=>`<p>${m}</p>`).join('');
+  $('#aviso').hidden=!msgs.length;
+}
+function readAnamnese(){
+  const o={parq:PARQ.map((_,i)=>pick('parq'+i)),bia:Object.fromEntries(BIA.map(([k])=>[k,pick('bia_'+k)])),cond:$$('[name=cond]:checked').map(c=>c.value)};
+  ANAM_TEXT.forEach(k=>o[k]=val(k));
+  return o;
+}
+f.addEventListener('change',e=>{if(/^parq|^bia_/.test(e.target.name||''))renderAviso();renderRail()});
+f.addEventListener('input',e=>{if(['nome','numero','tel','nasc'].includes(e.target.id)||e.target.closest('#r24body'))renderRail()});
+
+// ---- recordatório
+const REF=['Café da manhã','Lanche da manhã','Almoço','Lanche da tarde','Jantar','Ceia','Durante o serviço'];
+let rid=0;
+function addRow(h='',r='',a='',q=''){
+  const id=++rid;const tr=document.createElement('tr');
+  tr.innerHTML=`<td><input type="time" id="rh${id}" aria-label="Horário" value="${esc(h)}"></td>
+  <td><select id="rr${id}" aria-label="Refeição"><option value="">—</option>${REF.map(x=>`<option ${x===r?'selected':''}>${x}</option>`).join('')}</select></td>
+  <td><input type="text" id="ra${id}" aria-label="Alimento ou bebida" placeholder="Ex.: pão francês com margarina" value="${esc(a)}"></td>
+  <td><input type="text" id="rq${id}" aria-label="Quantidade" placeholder="Ex.: 2 unidades" value="${esc(q)}"></td>
+  <td><button type="button" class="x" aria-label="Remover item">×</button></td>`;
+  tr.querySelector('.x').onclick=()=>{tr.remove();renderRail()};
+  $('#r24body').appendChild(tr);
+}
+function r24rows(){return $$('#r24body tr').map(tr=>{const i=tr.querySelectorAll('input,select');return [i[0].value,i[1].value,i[2].value.trim(),i[3].value.trim()]}).filter(r=>r[2])}
+function fillR24(rows){$('#r24body').innerHTML='';(rows||[]).forEach(r=>addRow(...r));while($$('#r24body tr').length<4)addRow()}
+$('#addrow').onclick=()=>{addRow();renderRail()};
+function r24Lead(b){
+  const v=vespera(b.date);
+  const dia=v===HOJE?'hoje ('+fmtLong(v)+')':fmtLong(v);
+  return `Anote tudo o que você comeu e bebeu ${v===HOJE?'':'em '}${dia}, o dia antes da avaliação, de quando acordou até dormir. Pode preencher à noite ou na manhã da avaliação, antes de sair de casa.`;
+}
+
+// ---- formulário: limpar e carregar
+function resetForm(){
+  f.reset();photos={};selTime=null;selDay=days[0];clearPhotos();fillR24();
+  ['0','1','3','4','r24'].forEach(i=>showErr(i,''));renderAviso();
+}
+function loadForm(b){
+  resetForm();
+  ['nome','numero','grad','cia','sexo','tel','altura','funcao','escala'].forEach(k=>setVal(k,b[k]));
+  if(b.nasc)setVal('nasc',b.nasc);
+  selDay=b.date;selTime=b.time;$('#prepok').checked=true;
+  photos={...(b.photos||{})};Object.keys(photos).forEach(paintPhoto);
+  if(b.done.anamnese||b.anamTouched){
+    (b.parq||[]).forEach((v,i)=>{if(v){const r=f.querySelector(`[name="parq${i}"][value="${v}"]`);if(r)r.checked=true}});
+    Object.entries(b.bia||{}).forEach(([k,v])=>{if(v){const r=f.querySelector(`[name="bia_${k}"][value="${v}"]`);if(r)r.checked=true}});
+    $$('[name=cond]').forEach(c=>c.checked=(b.cond||[]).includes(c.value));
+    ANAM_TEXT.forEach(k=>setVal(k,b[k]));
+  }
+  setVal('dia-tipo',b.diatipo);setVal('dia-normal',b.dianormal);fillR24(b.r24);
+  renderAviso();
+}
+
+// ---- revisão e envio
+function renderReview(){
+  const st=status();
+  const items=[
+    ['Seus dados',val('grad')+' '+val('nome'),st.dados,true,0],
+    ['Horário',selTime?fmt(selDay)+' às '+selTime:'não escolhido',st.agenda,true,1],
+    ['Fotos posturais',Object.keys(photos).length+' de 4 enviadas',st.fotos,false,2],
+    ['Saúde e rotina','PAR-Q, bioimpedância, histórico e objetivo',st.anamnese,false,3]];
+  $('#review').innerHTML=items.map(([t,s,ok,req,i])=>`<div><span class="what"><b>${esc(t)}</b><span>${esc(s)}</span></span><span class="act">${ok?'<span class="st ok">Pronto</span>':`<span class="st ${req?'bad':'pend'}">${req?'Obrigatório':'Pendente'}</span>`}<button type="button" class="btn ghost" data-go="${i}">Editar</button></span></div>`).join('')+
+    `<div><span class="what"><b>Recordatório alimentar</b><span>Liberado na véspera, com o link no WhatsApp</span></span><span class="act"><span class="st wait">Na véspera</span></span></div>`;
+  $$('#review [data-go]').forEach(b=>b.onclick=()=>go(+b.dataset.go));
+}
+function idadeDe(nasc){if(!nasc)return '';const b=new Date(nasc+'T12:00'),n=new Date();return n.getFullYear()-b.getFullYear()-((n.getMonth()<b.getMonth()||(n.getMonth()===b.getMonth()&&n.getDate()<b.getDate()))?1:0)}
+function newCode(){let c;do{c='PIP-'+String(Math.floor(1000+Math.random()*9000))}while(bookings.some(b=>b.code===c));return c}
+function submit(){
+  const st=status();
+  if(!st.dados||!st.agenda){showErr(4,'Complete seus dados e o agendamento antes de enviar.');return}
+  if(!$('#lgpd').checked){showErr(4,'Para enviar, é preciso autorizar o uso dos dados.');return}
+  if(taken(selDay,selTime)){showErr(4,'Esse horário acabou de ser ocupado. Escolha outro.');return}
+  showErr(4,'');
+  const b={ex:false,code:newCode(),date:selDay,time:selTime,nome:val('nome'),grad:val('grad'),numero:val('numero'),cia:val('cia'),nasc:val('nasc'),idade:idadeDe(val('nasc')),sexo:val('sexo'),tel:val('tel'),altura:val('altura'),funcao:val('funcao'),escala:val('escala'),
+    ...readAnamnese(),anamTouched:true,r24:[],photos:{...photos},done:{dados:true,agenda:true,fotos:st.fotos,anamnese:st.anamnese,r24:false}};
+  bookings.push(b);admDay=b.date;admSel=b;cur=b;
+  renderDone(b);screen('done');
+}
+
+// ---- confirmação
+function pendentes(b){return [['fotos','fotos posturais'],['anamnese','saúde e rotina']].filter(([k])=>!b.done[k]).map(([,l])=>l)}
+function renderDone(b){
+  const v=vespera(b.date), pend=pendentes(b);
+  $('#done-when').textContent=fmtLong(b.date)+', às '+b.time+', na academia da Guarnição de Patos de Minas.';
+  $('#done-code').textContent=b.code;
+  $('#done-steps').innerHTML=`
+    <li class="now"><span class="n">1</span><div><b>Hoje: ficha enviada</b><p>${pend.length?'Ficou pendente: '+esc(pend.join(' e '))+'. Complete com o código até a véspera, ou no dia.':'Dados, horário, fotos e saúde e rotina prontos.'}</p></div></li>
+    <li><span class="n">2</span><div><b>${v===HOJE?'Hoje à noite':esc(fmt(v))}: lembrete no WhatsApp</b><p>O preparo da bioimpedância e o link do recordatório alimentar, para anotar o que você comer nesse dia.</p></div></li>
+    <li><span class="n">3</span><div><b>${esc(fmt(b.date))}, ${b.time}: avaliação</b><p>Cerca de 30 minutos na academia. Siga o preparo e leve o código.</p></div></li>`;
+  $('#phone').innerHTML=`<div class="who"><img src="../site/assets/brasao.png" alt="">PIPHPO · Avaliação física</div>
+    <div class="bubble"><p>${esc(b.grad)} ${esc(b.nome.split(' ')[0])}, sua avaliação é <b>amanhã, ${esc(fmt(b.date))}, às ${b.time}</b>, na academia da Guarnição.</p>
+    <p>Preparo: jejum de 4 h, sem café ou energético desde a noite, sem álcool, sem treino, bexiga vazia, sem metais.</p>
+    <p>Antes de dormir, ou amanhã cedo, anote o que você comeu hoje: <span style="color:#53BDEB">piphpo.vercel.app/r/${esc(b.code)}</span></p>
+    <small>18:00</small></div>`;
+}
+$('#done-ficha').onclick=()=>openFicha(cur);
+$('#goadm').onclick=()=>view('adm');
+$('#again').onclick=()=>{mode='novo';cur=null;resetForm();screen('portal');go(0)};
+
+// ---- minha ficha
+function openFicha(b,msg){
+  mode='ficha';cur=b;
+  const v=vespera(b.date), rel=released(b), d=b.done;
+  const nf=Object.keys(b.photos||{}).length;
+  $('#ficha-code').textContent='Código '+b.code;
+  $('#ficha-nome').textContent=b.grad+' '+b.nome;
+  $('#ficha-when').textContent='Avaliação em '+fmtLong(b.date)+', às '+b.time+', na academia da Guarnição.';
+  const row=(t,s,st,btn)=>`<div><span class="what"><b>${t}</b><span>${s}</span></span><span class="act">${st}${btn||''}</span></div>`;
+  const ok='<span class="st ok">Pronto</span>', pend='<span class="st pend">Pendente</span>';
+  const act=(k,l)=>`<button type="button" class="btn small" data-edit="${k}">${l}</button>`;
+  let r24;
+  if(d.r24)r24=row('Recordatório alimentar',(b.r24||[]).length+' itens'+(b.diatipo?', '+esc(b.diatipo.toLowerCase()):''),ok,act('r24','Revisar'));
+  else if(rel)r24=row('Recordatório alimentar','Liberado. Anote o que comeu '+(v===HOJE?'hoje':'em '+esc(fmt(v)))+'.',pend,act('r24','Preencher'));
+  else r24=row('Recordatório alimentar','Liberado em '+esc(fmtLong(v))+', com o link no WhatsApp.','<span class="st wait">Na véspera</span>',`<button type="button" class="btn ghost" id="sim-v">Simular a véspera</button>`);
+  $('#ficha-list').innerHTML=(msg?`<div><span class="alert ok" style="flex:1">${esc(msg)}</span></div>`:'')+
+    row('Seus dados','Nº '+esc(b.numero)+(b.tel?', WhatsApp '+esc(b.tel):''),ok)+
+    row('Horário',esc(fmt(b.date))+' às '+b.time,ok,act('1','Remarcar'))+
+    row('Fotos posturais',d.fotos?(nf?nf+' de 4 enviadas':'4 de 4 enviadas'):nf+' de 4 enviadas',d.fotos?ok:pend,act('2',d.fotos?'Trocar fotos':'Enviar fotos'))+
+    row('Saúde e rotina',d.anamnese?'PAR-Q, bioimpedância, histórico e objetivo':'Ainda não respondida',d.anamnese?ok:pend,act('3',d.anamnese?'Revisar':'Preencher'))+
+    r24;
+  $$('#ficha-list [data-edit]').forEach(x=>x.onclick=()=>{loadForm(b);screen('portal');const k=x.dataset.edit;go(k==='r24'?'r24':+k)});
+  const sv=$('#sim-v');if(sv)sv.onclick=()=>{simVespera=true;openFicha(b)};
+  screen('ficha');
+}
+function saveStep(){
+  const b=cur, st=status();
+  if(step===1){
+    if(!selTime){showErr(1,'Escolha um horário.');return}
+    if(!$('#prepok').checked){showErr(1,'Confirme que leu as orientações de preparo.');return}
+    if(taken(selDay,selTime,b)){showErr(1,'Esse horário acabou de ser ocupado. Escolha outro.');return}
+    const mudou=b.date!==selDay||b.time!==selTime;
+    b.date=selDay;b.time=selTime;
+    openFicha(b,mudou?'Horário alterado para '+fmt(b.date)+' às '+b.time+'.':'Horário mantido.');return;
+  }
+  if(step===2){
+    b.photos={...photos};b.done.fotos=st.fotos||(!!b.fotosEx&&b.done.fotos);if(st.fotos)b.fotosEx=false;
+    openFicha(b,b.done.fotos?'Fotos salvas.':'Fotos salvas. Faltam '+(4-Object.keys(photos).length)+'.');return;
+  }
+  if(step===3){
+    Object.assign(b,readAnamnese());b.anamTouched=true;b.done.anamnese=st.anamnese;
+    openFicha(b,st.anamnese?'Saúde e rotina salvas.':'Respostas salvas. Para concluir, responda todas as perguntas do PAR-Q, da bioimpedância e o objetivo.');return;
+  }
+  if(step==='r24'){
+    if(!val('dia-tipo')){showErr('r24','Diga se nesse dia você estava de serviço ou de folga.');return}
+    if(r24rows().length<4){showErr('r24','Registre ao menos 4 itens, do que comeu ao acordar até a última refeição.');return}
+    showErr('r24','');
+    b.r24=r24rows();b.diatipo=val('dia-tipo');b.dianormal=val('dia-normal');b.done.r24=true;
+    openFicha(b,'Recordatório enviado. Até a avaliação!');return;
+  }
+}
+function findCode(s){
+  let c=String(s||'').toUpperCase().replace(/\s/g,'');
+  if(/^\d{4}$/.test(c))c='PIP-'+c;
+  if(/^PIP\d{4}$/.test(c))c='PIP-'+c.slice(3);
+  return bookings.find(b=>b.code===c);
+}
+$('#code-go').onclick=()=>{
+  const b=findCode(val('code-in'));
+  const e=$('#err-code');
+  if(!b){e.textContent='Código não encontrado. Confira as 4 letras e números da sua confirmação.';e.hidden=false;return}
+  e.hidden=true;openFicha(b);
+};
+$('#code-in').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('#code-go').click()}});
+$('#ficha-sair').onclick=()=>{mode='novo';cur=null;simVespera=false;setVal('code-in','');screen('inicio')};
+$('#start').onclick=()=>{mode='novo';cur=null;resetForm();screen('portal');go(0)};
+
+// ---- painel do avaliador
+function alertsOf(b){
+  const a=[];
+  (b.parq||[]).forEach((v,i)=>{if(v==='sim')a.push(['bad','PAR-Q '+(i+1)+': '+PARQ[i].replace(/\?$/,'')])});
+  if(b.bia?.marcapasso==='sim')a.push(['bad','Dispositivo implantado: bioimpedância contraindicada']);
+  if(b.bia?.gest==='sim')a.push(['bad','Possível gestação: não realizar bioimpedância']);
+  if(b.bia?.metal==='sim')a.push(['w','Implante metálico: registrar local, pode afetar a leitura']);
+  if((b.cond||[]).length)a.push(['w','Condições relatadas: '+b.cond.join(', ')]);
+  return a;
+}
+function renderAdmin(){
+  renderDays($('#adm-days'),admDay,d=>{admDay=d;admSel=null;renderAdmin()},true);
+  const list=bookings.filter(b=>b.date===admDay).sort((a,b)=>a.time.localeCompare(b.time));
+  const full=list.filter(b=>Object.values(b.done).every(Boolean)).length;
+  const al=list.filter(b=>alertsOf(b).some(x=>x[0]==='bad')).length;
+  $('#kpis').innerHTML=`<div class="kpi"><b>${list.length}</b><span>avaliações em ${fmt(admDay)}</span></div><div class="kpi"><b>${full}</b><span>fichas 100% preenchidas</span></div><div class="kpi"><b style="color:${al?'var(--bad)':'inherit'}">${al}</b><span>com alerta de saúde</span></div><div class="kpi"><b>${MANHA.length+TARDE.length-list.length}</b><span>horários livres</span></div>`;
+  if(!admSel||admSel.date!==admDay)admSel=list[0]||null;
+  $('#adm-list').innerHTML=[...MANHA,...TARDE].map(t=>{
+    const b=list.find(x=>x.time===t);
+    if(!b)return `<div class="free"><span>${t}</span><span>livre</span></div>`;
+    const d=b.done,bad=alertsOf(b).some(x=>x[0]==='bad');
+    const mk=(k,l,n)=>`<span class="mk ${d[k]?'ok':'no'}" title="${n}: ${d[k]?'pronto':'pendente'}">${l}</span>`;
+    return `<button type="button" class="row" data-code="${esc(b.code)}" aria-current="${admSel===b}"><span class="t">${t}</span><span style="min-width:0"><span class="n">${esc(b.grad)} ${esc(b.nome)}${bad?'<span class="flag">alerta</span>':''}${b.ex?'':'<span class="flag new">novo</span>'}</span><span class="sub">${esc([b.funcao,b.cia].filter(Boolean).join(' · ')||'Função e companhia não informadas')}</span></span><span class="marks">${mk('dados','D','Dados')}${mk('fotos','F','Fotos')}${mk('anamnese','A','Anamnese')}${mk('r24','R','Recordatório')}</span></button>`;
+  }).join('');
+  $$('#adm-list .row').forEach(r=>r.onclick=()=>{admSel=bookings.find(b=>b.code===r.dataset.code);renderAdmin()});
+  renderDetail();
+}
+function renderDetail(){
+  const b=admSel,el=$('#adm-detail');
+  if(!b){el.innerHTML='<p class="muted">Nenhuma avaliação marcada neste dia. Os horários aparecem aqui quando alguém agenda pelo portal.</p>';return}
+  const a=alertsOf(b);
+  const pend=Object.entries({fotos:'fotos posturais',anamnese:'anamnese',r24:'recordatório 24h'+(released(b)?'':' (liberado na véspera)')}).filter(([k])=>!b.done[k]).map(([,l])=>l);
+  const PL={frente:'frente',perfil_d:'perfil dir.',perfil_e:'perfil esq.',costas:'costas'};
+  const th=PHOTO_KEYS.map(p=>{
+    if(b.photos&&b.photos[p])return `<div class="thumb"><img src="${b.photos[p]}" alt="Foto ${PL[p]}"></div>`;
+    if(b.fotosEx)return `<div class="thumb">${PL[p]}<br>(exemplo)</div>`;
+    return `<div class="thumb">${PL[p]}<br>não enviada</div>`}).join('');
+  const kv=(k,v)=>v?`<dt>${k}</dt><dd>${esc(v)}</dd>`:'';
+  el.innerHTML=`
+   <div><p class="muted small">${b.time}, ${fmt(b.date)} · ${esc(b.code)}</p><h3 style="font-size:1.7rem">${esc(b.grad)} ${esc(b.nome)}</h3><p class="muted small">Nº ${esc(b.numero)} · ${esc(b.idade||'—')} anos · ${esc(b.sexo||'—')}</p></div>
+   ${a.length?`<div class="alerts">${a.map(([t,m])=>`<div class="alert ${t==='w'?'w':''}">${esc(m)}</div>`).join('')}</div>`:(b.done.anamnese?'<div class="alert ok">Sem alertas no PAR-Q e na triagem da bioimpedância</div>':'<div class="alert w">Anamnese não respondida: aplicar PAR-Q antes da avaliação</div>')}
+   ${pend.length?`<p class="small"><span class="st pend">Pendente</span> ${esc(pend.join(', '))}.</p>`:''}
+   <div><p class="sec-h">Perfil</p><dl class="kv">${kv('Função',b.funcao)}${kv('Escala',b.escala)}${kv('Objetivo',b.obj)}${kv('Atividade',b.ativ?(b.ativ+(b.tipoativ?' ('+b.tipoativ+')':'')):'')}${kv('Sono',b.sono?b.sono+' h/noite':'')}${kv('Medicamentos',b.meds)}${kv('Lesões',b.lesoes)}${kv('Dor no serviço',b.dorserv)}${kv('Observação',b.obs)}</dl></div>
+   <div><p class="sec-h">Fotos posturais</p><div class="thumbs">${th}</div></div>
+   <div><p class="sec-h">Recordatório 24h${b.diatipo?', '+esc(b.diatipo.toLowerCase()):''}</p>${b.r24&&b.r24.length?`<table class="mini">${b.r24.map(r=>`<tr><td>${esc(r[0]||'—')}</td><td>${esc(r[2])}<br><span class="muted small">${esc(r[3])}${r[1]?' · '+esc(r[1]):''}</span></td></tr>`).join('')}</table>`:'<p class="muted small">Não preenchido.</p>'}</div>`;
+}
+
+// ---- troca de visão
+function view(v){
+  $('#view-mil').hidden=v!=='mil';$('#view-adm').hidden=v!=='adm';
+  $('#v-mil').setAttribute('aria-pressed',v==='mil');$('#v-adm').setAttribute('aria-pressed',v==='adm');
+  if(v==='adm')renderAdmin();
+  window.scrollTo(0,0);
+}
+$('#v-mil').onclick=()=>view('mil');$('#v-adm').onclick=()=>view('adm');
+
+fillR24();
+screen('inicio');
+})();
+</script>
+
+</body>
+</html>
