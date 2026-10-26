@@ -24,8 +24,10 @@ Abra `site/index.html` ou publique no GitHub Pages (Settings → Pages → branc
 ## Protótipo
 
 Abra `prototipo/index.html` no navegador. Duas visões:
-- **Portal do militar**: dados → agendamento da bioimpedância → fotos posturais → anamnese (PAR-Q + triagem BIA) → recordatório 24h → revisão + consentimento LGPD.
-- **Painel do avaliador**: agenda do dia, status de preenchimento (D/F/A/R), alertas de saúde e ficha completa.
+- **Militar**: tela inicial com dois caminhos.
+  - *Primeira vez*: dados → agendamento da bioimpedância → fotos posturais → saúde e rotina (PAR-Q + triagem BIA) → revisão + consentimento LGPD. Só dados e horário são obrigatórios. No fim, o militar recebe um código (`PIP-0000`) e vê o que acontece até a avaliação, com a mensagem de WhatsApp da véspera.
+  - *Já agendei*: com o código, abre a própria ficha para completar fotos e anamnese, remarcar e preencher o recordatório 24h. O recordatório só é liberado na véspera (no protótipo há o botão "Simular a véspera"; código de teste: `PIP-2741`).
+- **Avaliador**: agenda do dia, status de preenchimento (D/F/A/R), alertas de saúde e ficha completa.
 
 Os dados são de exemplo e nada é salvo.
 
